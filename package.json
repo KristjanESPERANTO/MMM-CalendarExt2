@@ -31,7 +31,8 @@
     "release": "commit-and-tag-version",
     "stylelint": "stylelint **/*.css",
     "stylelint:fix": "stylelint **/*.css --fix",
-    "test": "node --run lint && node --run prettier"
+    "test": "node --run lint && node --run prettier && node --run test:unit",
+    "test:unit": "node --test test/**/*.test.js"
   },
   "lint-staged": {
     "!(*.css|*.md)": [
