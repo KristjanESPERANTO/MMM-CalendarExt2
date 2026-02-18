@@ -257,3 +257,36 @@ test("expands recurring all-day events with correct duration", () => {
     assert.equal(endMs - startMs, 86400000);
   }
 });
+
+test("returns plain strings for properties that carry ICAL parameters (e.g. SUMMARY;LANGUAGE=de)", () => {
+  // node-ical returns { params: {...}, val: "..." } for parameterised properties
+  // instead of a plain string – stringValue() must unwrap them.
+  const iCalData = joinIcs(
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "BEGIN:VEVENT",
+    "UID:param-1",
+    "SUMMARY;LANGUAGE=de:Team Meeting",
+    "LOCATION;ENCODING=QUOTED-PRINTABLE:Büro",
+    "DESCRIPTION;LANGUAGE=de:Wöchentliches Meeting",
+    "DTSTART:20260301T100000Z",
+    "DTEND:20260301T103000Z",
+    "END:VEVENT",
+    "END:VCALENDAR"
+  );
+
+  const result = parseAndExpandEvents(
+    iCalData,
+    new Date("2026-03-01T00:00:00Z"),
+    new Date("2026-03-02T00:00:00Z")
+  );
+
+  assert.equal(result.events.length, 1);
+  const ev = result.events[0];
+  assert.equal(typeof ev.summary, "string", "summary must be a plain string");
+  assert.equal(typeof ev.location, "string", "location must be a plain string");
+  assert.equal(typeof ev.description, "string", "description must be a plain string");
+  assert.equal(ev.summary, "Team Meeting");
+  assert.equal(ev.location, "Büro");
+  assert.equal(ev.description, "Wöchentliches Meeting");
+});
