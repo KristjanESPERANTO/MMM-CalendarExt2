@@ -19,6 +19,7 @@
   "main": "MMM-CalendarExt2.js",
   "type": "commonjs",
   "scripts": {
+    "demo": "cd ../../ && MM_CONFIG_FILE=modules/MMM-CalendarExt2/config.demo.js node --run start:dev",
     "eslint": "eslint",
     "eslint:fix": "eslint --fix",
     "lint": "node --run eslint && node --run stylelint && node --run markdownlint",
