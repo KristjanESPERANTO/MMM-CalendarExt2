@@ -125,19 +125,18 @@ module.exports = NodeHelper.create({
       return;
     }
 
-    const wholeEvents = [...events.events, ...events.occurrences];
+    const wholeEvents = events;
     let eventPool = [];
 
     wholeEvents.forEach((item) => {
-      const ri = item;
       const ev = {};
       ev.calendarId = calendar.uid;
-      ev.location = ri.location;
-      ev.description = ri.description;
-      ev.title = ri.summary;
-      ev.isRecurring = ri.isRecurring;
-      ev.attendees = ri.attendees || [];
-      ev.isCancelled = ri.status?.toUpperCase() === "CANCELLED";
+      ev.location = item.location;
+      ev.description = item.description;
+      ev.title = item.summary;
+      ev.isRecurring = item.isRecurring;
+      ev.attendees = item.attendees || [];
+      ev.isCancelled = item.status?.toUpperCase() === "CANCELLED";
       if (
         Array.isArray(calendar.replaceTitle) &&
         calendar.replaceTitle.length > 0
@@ -165,7 +164,7 @@ module.exports = NodeHelper.create({
       ev.endDate = endDate.unix();
       ev.startDateJ = startDate.toJSON();
       ev.endDateJ = endDate.toJSON();
-      ev.duration = ri.duration;
+      ev.duration = item.duration;
       ev.isMoment = ev.duration === 0;
       ev.isPassed = Boolean(endDate.isBefore(dayjs()));
       if (ev.duration <= 86400) {
@@ -177,19 +176,15 @@ module.exports = NodeHelper.create({
       }
       ev.className = calendar.className;
       ev.icon = calendar.icon;
-      const isFullday = Boolean(
-        startDate.format("HHmmss") === "000000" &&
-        endDate.format("HHmmss") === "000000"
-      );
-      ev.isFullday = isFullday;
+      ev.isFullday = item.isFullDay;
 
       // import the Microsoft property X-MICROSOFT-CDO-BUSYSTATUS, fall back to "BUSY" in case none was found
       // possible values are 'FREE'|'TENTATIVE'|'BUSY'|'OOF' according to
       // https://docs.microsoft.com/en-us/openspecs/exchange_server_protocols/ms-oxcical/cd68eae7-ed65-4dd3-8ea7-ad585c76c736
-      ev.ms_busystatus = ri.ms_busystatus || "BUSY";
+      ev.ms_busystatus = item.ms_busystatus || "BUSY";
 
-      ev.uid = ri.uid
-        ? `${calendar.uid}:${ev.startDate}:${ev.endDate}:${ri.uid}`
+      ev.uid = item.uid
+        ? `${calendar.uid}:${ev.startDate}:${ev.endDate}:${item.uid}`
         : `${calendar.uid}:${ev.startDate}:${ev.endDate}:${ev.title}`;
       ev.calendarName = calendar.name;
       if (calendar.filter) {

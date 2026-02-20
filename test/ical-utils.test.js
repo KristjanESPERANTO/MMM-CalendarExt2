@@ -36,10 +36,9 @@ test("parses a non-recurring event with attendee extraction and obfuscation", ()
     new Date("2026-03-02T00:00:00Z")
   );
 
-  assert.equal(result.events.length, 1);
-  assert.equal(result.occurrences.length, 0);
+  assert.equal(result.length, 1);
 
-  const [event] = result.events;
+  const [event] = result;
   assert.equal(event.summary, "Team Sync");
   assert.equal(event.location, "Office");
   assert.equal(event.description, "Weekly team sync");
@@ -74,8 +73,7 @@ test("ignores non-recurring events outside requested window", () => {
     new Date("2026-04-02T00:00:00Z")
   );
 
-  assert.equal(result.events.length, 0);
-  assert.equal(result.occurrences.length, 0);
+  assert.equal(result.length, 0);
 });
 
 test("expands recurring events and applies EXDATE exclusions", () => {
@@ -99,10 +97,9 @@ test("expands recurring events and applies EXDATE exclusions", () => {
     new Date("2026-02-07T00:00:00Z")
   );
 
-  assert.equal(result.events.length, 0);
-  assert.equal(result.occurrences.length, 4);
+  assert.equal(result.length, 4);
 
-  const starts = result.occurrences.map((occurrence) => occurrence.start.toISOString());
+  const starts = result.map((occurrence) => occurrence.start.toISOString());
   assert.deepEqual(starts, [
     "2026-02-01T10:00:00.000Z",
     "2026-02-02T10:00:00.000Z",
@@ -110,7 +107,7 @@ test("expands recurring events and applies EXDATE exclusions", () => {
     "2026-02-05T10:00:00.000Z"
   ]);
 
-  for (const occurrence of result.occurrences) {
+  for (const occurrence of result) {
     assert.equal(occurrence.isRecurring, true);
   }
 });
@@ -136,7 +133,7 @@ test("respects maxIterations for recurring expansion", () => {
     2
   );
 
-  assert.equal(result.occurrences.length, 2);
+  assert.equal(result.length, 2);
 });
 
 test("uses default attendee metadata when optional params are missing", () => {
@@ -159,8 +156,8 @@ test("uses default attendee metadata when optional params are missing", () => {
     new Date("2026-06-02T00:00:00Z")
   );
 
-  assert.equal(result.events.length, 1);
-  assert.deepEqual(result.events[0].attendees[0], {
+  assert.equal(result.length, 1);
+  assert.deepEqual(result[0].attendees[0], {
     name: "someone@***.com",
     email: "someone@***.com",
     status: "NEEDS-ACTION",
@@ -187,10 +184,11 @@ test("parses all-day events with correct duration and date span", () => {
     new Date("2026-03-31T00:00:00Z")
   );
 
-  assert.equal(result.events.length, 1);
+  assert.equal(result.length, 1);
 
-  const event = result.events[0];
+  const event = result[0];
   assert.equal(event.summary, "Holiday");
+  assert.equal(event.isFullDay, true, "all-day event should have isFullDay=true");
   assert.equal(event.duration, 86400, "all-day event should be exactly 86400s");
 
   const startMs = event.start.getTime();
@@ -217,9 +215,10 @@ test("provides correct endDate and duration for timed events", () => {
     new Date("2026-03-02T00:00:00Z")
   );
 
-  assert.equal(result.events.length, 1);
+  assert.equal(result.length, 1);
 
-  const event = result.events[0];
+  const event = result[0];
+  assert.equal(event.isFullDay, false, "timed event should have isFullDay=false");
   assert.equal(
     event.end.toISOString(),
     "2026-03-01T11:30:00.000Z"
@@ -247,9 +246,10 @@ test("expands recurring all-day events with correct duration", () => {
     new Date("2026-03-31T00:00:00Z")
   );
 
-  assert.equal(result.occurrences.length, 3);
+  assert.equal(result.length, 3);
 
-  for (const occurrence of result.occurrences) {
+  for (const occurrence of result) {
+    assert.equal(occurrence.isFullDay, true, "recurring all-day should have isFullDay=true");
     assert.equal(occurrence.duration, 86400);
 
     const startMs = occurrence.start.getTime();
@@ -281,8 +281,8 @@ test("returns plain strings for properties that carry ICAL parameters (e.g. SUMM
     new Date("2026-03-02T00:00:00Z")
   );
 
-  assert.equal(result.events.length, 1);
-  const ev = result.events[0];
+  assert.equal(result.length, 1);
+  const ev = result[0];
   assert.equal(typeof ev.summary, "string", "summary must be a plain string");
   assert.equal(typeof ev.location, "string", "location must be a plain string");
   assert.equal(typeof ev.description, "string", "description must be a plain string");
@@ -311,8 +311,8 @@ test("exposes status=CANCELLED on a non-recurring event", () => {
     new Date("2026-03-02T00:00:00Z")
   );
 
-  assert.equal(result.events.length, 1);
-  const ev = result.events[0];
+  assert.equal(result.length, 1);
+  const ev = result[0];
   assert.equal(ev.status, "CANCELLED");
 });
 
@@ -336,8 +336,8 @@ test("exposes ms_busystatus for Microsoft X-CDO property", () => {
     new Date("2026-03-02T00:00:00Z")
   );
 
-  assert.equal(result.events.length, 1);
-  assert.equal(result.events[0].ms_busystatus, "OOF");
+  assert.equal(result.length, 1);
+  assert.equal(result[0].ms_busystatus, "OOF");
 });
 
 test("exposes status on a recurring occurrence (from parent event)", () => {
@@ -361,8 +361,8 @@ test("exposes status on a recurring occurrence (from parent event)", () => {
     new Date("2026-03-05T00:00:00Z")
   );
 
-  assert.equal(result.occurrences.length, 2);
-  for (const occurrence of result.occurrences) {
+  assert.equal(result.length, 2);
+  for (const occurrence of result) {
     assert.equal(occurrence.status, "CANCELLED");
   }
 });
