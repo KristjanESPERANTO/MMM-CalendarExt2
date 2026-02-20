@@ -129,21 +129,15 @@ module.exports = NodeHelper.create({
     let eventPool = [];
 
     wholeEvents.forEach((item) => {
-      const ri = Object.hasOwn(item, "item") ? item.item : item;
+      const ri = item;
       const ev = {};
       ev.calendarId = calendar.uid;
       ev.location = ri.location;
       ev.description = ri.description;
       ev.title = ri.summary;
-      ev.isRecurring = ri.isRecurring();
+      ev.isRecurring = ri.isRecurring;
       ev.attendees = ri.attendees || [];
-      ev.isCancelled =
-        Object.hasOwn(item, "component") &&
-        item.component &&
-        typeof item.component.getFirstPropertyValue === "function" &&
-        // eslint-disable-next-line no-eq-null, eqeqeq
-        item.component.getFirstPropertyValue("status") != null &&
-        item.component.getFirstPropertyValue("status").toUpperCase() === "CANCELLED";
+      ev.isCancelled = ri.status?.toUpperCase() === "CANCELLED";
       if (
         Array.isArray(calendar.replaceTitle) &&
         calendar.replaceTitle.length > 0
@@ -161,17 +155,17 @@ module.exports = NodeHelper.create({
       if (calendar.forceLocalTZ) {
         // Interpret event times in the local timezone to mitigate bad TZ info in some iCals
         const localTZ = dayjs.tz.guess();
-        startDate = dayjs.tz(item.startDate.toJSDate(), localTZ);
-        endDate = dayjs.tz(item.endDate.toJSDate(), localTZ);
+        startDate = dayjs.tz(item.start, localTZ);
+        endDate = dayjs.tz(item.end, localTZ);
       } else {
-        startDate = dayjs(item.startDate.toJSDate());
-        endDate = dayjs(item.endDate.toJSDate());
+        startDate = dayjs(item.start);
+        endDate = dayjs(item.end);
       }
       ev.startDate = startDate.unix();
       ev.endDate = endDate.unix();
       ev.startDateJ = startDate.toJSON();
       ev.endDateJ = endDate.toJSON();
-      ev.duration = ri.duration.toSeconds();
+      ev.duration = ri.duration;
       ev.isMoment = ev.duration === 0;
       ev.isPassed = Boolean(endDate.isBefore(dayjs()));
       if (ev.duration <= 86400) {
@@ -192,12 +186,7 @@ module.exports = NodeHelper.create({
       // import the Microsoft property X-MICROSOFT-CDO-BUSYSTATUS, fall back to "BUSY" in case none was found
       // possible values are 'FREE'|'TENTATIVE'|'BUSY'|'OOF' according to
       // https://docs.microsoft.com/en-us/openspecs/exchange_server_protocols/ms-oxcical/cd68eae7-ed65-4dd3-8ea7-ad585c76c736
-      ev.ms_busystatus = "BUSY";
-      if (ri.component && typeof ri.component.getFirstPropertyValue === "function") {
-        ev.ms_busystatus =
-          ri.component.getFirstPropertyValue("x-microsoft-cdo-busystatus") ||
-          "BUSY";
-      }
+      ev.ms_busystatus = ri.ms_busystatus || "BUSY";
 
       ev.uid = ri.uid
         ? `${calendar.uid}:${ev.startDate}:${ev.endDate}:${ri.uid}`

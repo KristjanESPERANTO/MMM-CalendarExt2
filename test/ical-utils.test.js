@@ -44,7 +44,7 @@ test("parses a non-recurring event with attendee extraction and obfuscation", ()
   assert.equal(event.location, "Office");
   assert.equal(event.description, "Weekly team sync");
   assert.equal(event.uid, "single-1");
-  assert.equal(event.isRecurring(), false);
+  assert.equal(event.isRecurring, false);
 
   assert.equal(event.attendees.length, 1);
   assert.deepEqual(event.attendees[0], {
@@ -102,7 +102,7 @@ test("expands recurring events and applies EXDATE exclusions", () => {
   assert.equal(result.events.length, 0);
   assert.equal(result.occurrences.length, 4);
 
-  const starts = result.occurrences.map((occurrence) => occurrence.startDate.toJSDate().toISOString());
+  const starts = result.occurrences.map((occurrence) => occurrence.start.toISOString());
   assert.deepEqual(starts, [
     "2026-02-01T10:00:00.000Z",
     "2026-02-02T10:00:00.000Z",
@@ -111,7 +111,7 @@ test("expands recurring events and applies EXDATE exclusions", () => {
   ]);
 
   for (const occurrence of result.occurrences) {
-    assert.equal(occurrence.item.isRecurring(), true);
+    assert.equal(occurrence.isRecurring, true);
   }
 });
 
@@ -191,10 +191,10 @@ test("parses all-day events with correct duration and date span", () => {
 
   const event = result.events[0];
   assert.equal(event.summary, "Holiday");
-  assert.equal(event.duration.toSeconds(), 86400, "all-day event should be exactly 86400s");
+  assert.equal(event.duration, 86400, "all-day event should be exactly 86400s");
 
-  const startMs = event.startDate.toJSDate().getTime();
-  const endMs = event.endDate.toJSDate().getTime();
+  const startMs = event.start.getTime();
+  const endMs = event.end.getTime();
   assert.equal(endMs - startMs, 86400000, "end - start should be exactly 1 day in ms");
 });
 
@@ -221,10 +221,10 @@ test("provides correct endDate and duration for timed events", () => {
 
   const event = result.events[0];
   assert.equal(
-    event.endDate.toJSDate().toISOString(),
+    event.end.toISOString(),
     "2026-03-01T11:30:00.000Z"
   );
-  assert.equal(event.duration.toSeconds(), 5400, "1.5h = 5400s");
+  assert.equal(event.duration, 5400, "1.5h = 5400s");
 });
 
 test("expands recurring all-day events with correct duration", () => {
@@ -250,10 +250,10 @@ test("expands recurring all-day events with correct duration", () => {
   assert.equal(result.occurrences.length, 3);
 
   for (const occurrence of result.occurrences) {
-    assert.equal(occurrence.item.duration.toSeconds(), 86400);
+    assert.equal(occurrence.duration, 86400);
 
-    const startMs = occurrence.startDate.toJSDate().getTime();
-    const endMs = occurrence.endDate.toJSDate().getTime();
+    const startMs = occurrence.start.getTime();
+    const endMs = occurrence.end.getTime();
     assert.equal(endMs - startMs, 86400000);
   }
 });
@@ -289,4 +289,80 @@ test("returns plain strings for properties that carry ICAL parameters (e.g. SUMM
   assert.equal(ev.summary, "Team Meeting");
   assert.equal(ev.location, "Büro");
   assert.equal(ev.description, "Wöchentliches Meeting");
+});
+
+test("exposes status=CANCELLED on a non-recurring event", () => {
+  const iCalData = joinIcs(
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "BEGIN:VEVENT",
+    "UID:cancelled-1",
+    "SUMMARY:Cancelled Meeting",
+    "STATUS:CANCELLED",
+    "DTSTART:20260301T100000Z",
+    "DTEND:20260301T103000Z",
+    "END:VEVENT",
+    "END:VCALENDAR"
+  );
+
+  const result = parseAndExpandEvents(
+    iCalData,
+    new Date("2026-03-01T00:00:00Z"),
+    new Date("2026-03-02T00:00:00Z")
+  );
+
+  assert.equal(result.events.length, 1);
+  const ev = result.events[0];
+  assert.equal(ev.status, "CANCELLED");
+});
+
+test("exposes ms_busystatus for Microsoft X-CDO property", () => {
+  const iCalData = joinIcs(
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "BEGIN:VEVENT",
+    "UID:oof-1",
+    "SUMMARY:OOF Event",
+    "X-MICROSOFT-CDO-BUSYSTATUS:OOF",
+    "DTSTART:20260301T100000Z",
+    "DTEND:20260301T103000Z",
+    "END:VEVENT",
+    "END:VCALENDAR"
+  );
+
+  const result = parseAndExpandEvents(
+    iCalData,
+    new Date("2026-03-01T00:00:00Z"),
+    new Date("2026-03-02T00:00:00Z")
+  );
+
+  assert.equal(result.events.length, 1);
+  assert.equal(result.events[0].ms_busystatus, "OOF");
+});
+
+test("exposes status on a recurring occurrence (from parent event)", () => {
+  const iCalData = joinIcs(
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "BEGIN:VEVENT",
+    "UID:cancelled-rec-1",
+    "SUMMARY:Daily Cancelled",
+    "STATUS:CANCELLED",
+    "DTSTART:20260301T100000Z",
+    "DTEND:20260301T103000Z",
+    "RRULE:FREQ=DAILY;COUNT=2",
+    "END:VEVENT",
+    "END:VCALENDAR"
+  );
+
+  const result = parseAndExpandEvents(
+    iCalData,
+    new Date("2026-03-01T00:00:00Z"),
+    new Date("2026-03-05T00:00:00Z")
+  );
+
+  assert.equal(result.occurrences.length, 2);
+  for (const occurrence of result.occurrences) {
+    assert.equal(occurrence.status, "CANCELLED");
+  }
 });
