@@ -136,6 +136,7 @@ module.exports = NodeHelper.create({
       ev.title = item.summary;
       ev.isRecurring = item.isRecurring;
       ev.attendees = item.attendees || [];
+      ev.categories = item.categories || [];
       ev.isCancelled = item.status?.toUpperCase() === "CANCELLED";
       if (
         Array.isArray(calendar.replaceTitle) &&

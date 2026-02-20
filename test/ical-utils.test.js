@@ -366,3 +366,77 @@ test("exposes status on a recurring occurrence (from parent event)", () => {
     assert.equal(occurrence.status, "CANCELLED");
   }
 });
+
+test("exposes categories as array on a non-recurring event", () => {
+  const iCalData = joinIcs(
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "BEGIN:VEVENT",
+    "UID:cat-single-1",
+    "SUMMARY:Zahnarzt",
+    "CATEGORIES:Health,Important",
+    "DTSTART:20260301T100000Z",
+    "DTEND:20260301T110000Z",
+    "END:VEVENT",
+    "END:VCALENDAR"
+  );
+
+  const result = parseAndExpandEvents(
+    iCalData,
+    new Date("2026-03-01T00:00:00Z"),
+    new Date("2026-03-02T00:00:00Z")
+  );
+
+  assert.equal(result.length, 1);
+  assert.deepEqual(result[0].categories, ["Health", "Important"]);
+});
+
+test("exposes empty categories array when CATEGORIES is absent", () => {
+  const iCalData = joinIcs(
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "BEGIN:VEVENT",
+    "UID:cat-absent-1",
+    "SUMMARY:No Categories",
+    "DTSTART:20260301T100000Z",
+    "DTEND:20260301T110000Z",
+    "END:VEVENT",
+    "END:VCALENDAR"
+  );
+
+  const result = parseAndExpandEvents(
+    iCalData,
+    new Date("2026-03-01T00:00:00Z"),
+    new Date("2026-03-02T00:00:00Z")
+  );
+
+  assert.equal(result.length, 1);
+  assert.deepEqual(result[0].categories, []);
+});
+
+test("propagates categories from parent event to recurring occurrences", () => {
+  const iCalData = joinIcs(
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "BEGIN:VEVENT",
+    "UID:cat-rec-1",
+    "SUMMARY:Weekly Meeting",
+    "CATEGORIES:Work,Team",
+    "DTSTART:20260302T090000Z",
+    "DTEND:20260302T100000Z",
+    "RRULE:FREQ=WEEKLY;COUNT=3",
+    "END:VEVENT",
+    "END:VCALENDAR"
+  );
+
+  const result = parseAndExpandEvents(
+    iCalData,
+    new Date("2026-03-01T00:00:00Z"),
+    new Date("2026-03-31T00:00:00Z")
+  );
+
+  assert.equal(result.length, 3);
+  for (const occurrence of result) {
+    assert.deepEqual(occurrence.categories, ["Work", "Team"]);
+  }
+});

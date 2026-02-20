@@ -1,4 +1,4 @@
-const pattern = "^(MMM-CalendarExt2|CX2|fake_module|module-content|[a-z][a-zA-Z0-9]+(_\\d+)?)$";
+const pattern = "^(MMM-CalendarExt2|CX2|fake_module|module-content|[a-z][a-zA-Z0-9-]+(_\\d+)?)$";
 const config = {
   "extends": ["stylelint-config-standard", "stylelint-prettier/recommended"],
   "root": true,

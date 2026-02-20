@@ -104,3 +104,34 @@ Each event could have these values as dataset.
 - data-duration
 - data-title
 - data-location
+- data-categories (comma-separated list of categories, e.g. `"Work,Important"`)
+
+## category-based styling
+
+Events with a `CATEGORIES` property in the iCal source automatically receive:
+
+- A CSS class `category-{slug}` on the event wrapper (e.g. `category-work`, `category-family`). The slug is the category name lowercased, with non-alphanumeric runs replaced by `-` — so `"Doctor's Appointment"` becomes `category-doctor-s-appointment` and `"Freizeit & Sport"` becomes `category-freizeit-sport`.
+- A `data-categories` attribute containing all categories as a comma-separated string.
+- A `.eventCategories` div inside the event's `eventSub` area (visible in agenda view).
+
+The module ships built-in colour rules for common English category names (`work`, `health`, `vacation`, `leisure`, `family`, `birthday`, `deadline`, `important`). Add your own in `css/custom.css`:
+
+```css
+/* Example – add to css/custom.css */
+.CX2 .event.category-sports {
+  border-left-color: #8bc34a;
+  background-color: rgb(139 195 74 / 12%);
+}
+.CX2 .event.category-finance {
+  border-left-color: #ffc107;
+  background-color: rgb(255 193 7 / 12%);
+}
+```
+
+Because categories are free-form text defined by your calendar, the class is derived from whatever your iCal files contain. The general selector below targets any event that carries at least one category:
+
+```css
+.CX2 .event[class*="category-"] {
+  border-left: 5px solid transparent;
+}
+```

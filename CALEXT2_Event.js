@@ -123,6 +123,7 @@ class Event {
     eventDom.dataset.title = event.title;
     eventDom.dataset.location = event.location;
     eventDom.dataset.busystatus = event.ms_busystatus;
+    Event.applyCategories(event, eventDom, null);
 
     const mainDom = document.createElement("div");
     mainDom.classList.add("eventMain");
@@ -150,6 +151,7 @@ class Event {
     location.classList.add("eventLocation");
     location.innerHTML = event.location;
     subDom.appendChild(location);
+    Event.applyCategories(event, null, subDom);
 
     // Add attendees if present and enabled
     if (this.showAttendees && event.attendees && event.attendees.length > 0) {
@@ -176,6 +178,34 @@ class Event {
 
     eventDom.appendChild(subDom);
     return eventDom;
+  }
+
+  /**
+   * Applies category CSS classes and data-attribute to eventDom,
+   * and appends an eventCategories div to subDom.
+   * Pass null for targetDom or slotDom to skip that part.
+   * @param {object} event - The event data object
+   * @param {HTMLElement|null} targetDom - The event wrapper element
+   * @param {HTMLElement|null} slotDom - The sub-content element
+   */
+  static applyCategories (event, targetDom, slotDom) {
+    const cats = Array.isArray(event.categories) ? event.categories : [];
+    if (targetDom) {
+      for (const cat of cats) {
+        if (cat) {
+          targetDom.classList.add(`category-${cat.toLowerCase().replace(/[^a-z0-9]+/gu, "-").replace(/^-|-$/gu, "")}`);
+        }
+      }
+
+      targetDom.dataset.categories = cats.join(",");
+    }
+
+    if (slotDom && cats.length > 0) {
+      const categoriesDom = document.createElement("div");
+      categoriesDom.classList.add("eventCategories");
+      categoriesDom.innerHTML = cats.join(", ");
+      slotDom.appendChild(categoriesDom);
+    }
   }
 
   createEventTime () {
