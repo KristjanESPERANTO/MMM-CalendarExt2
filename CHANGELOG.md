@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.1.0](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/compare/v2.0.2...v2.1.0) (2026-02-20)
+
+### Features
+
+- add CATEGORIES support ([e3e975d](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/commit/e3e975d640170a4ac833915d0bc21b8aa0127e5d)), closes [#86](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/issues/86)
+
+### Chores
+
+- add demo config and script ([9378ba6](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/commit/9378ba691e6843549169343edc24b61d6c2a31c8))
+- update devDependencies ([1d36f70](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/commit/1d36f702cbb297e42ac8eb06596ba9b3392ab8f2))
+- update ESLint config ([af5d35f](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/commit/af5d35f68e930ce46dadaefef2687c4c329edc55))
+
 ## [2.0.2](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/compare/v2.0.1...v2.0.2) (2026-01-18)
 
 ### Bug Fixes
