@@ -66,6 +66,14 @@
       {
         "type": "chore",
         "section": "Chores"
+      },
+      {
+        "type": "refactor",
+        "section": "Code Refactoring"
+      },
+      {
+        "type": "test",
+        "section": "Tests"
       }
     ]
   },
