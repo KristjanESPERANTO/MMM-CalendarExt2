@@ -89,3 +89,44 @@ transform: (event) => {
   return event; // Return that event.
 };
 ```
+
+> **Note:** MagicMirror² fetches the module config from the server as JSON, which means **JavaScript functions in the config are lost** at runtime. The `transform` function only works when the config is loaded directly (e.g., Electron mode with a local `config.js` evaluated in-process). For standard browser-based setups, use `iconMap` instead.
+
+# Icon Map
+
+The `iconMap` view option assigns icons to events based on their categories. Unlike `transform`, it uses a plain object (string → string mapping) that survives JSON serialization.
+
+```js
+iconMap: {
+  Birthday: "fxemoji-birthdaycake",
+  Health: "noto-hospital",
+  Work: "noto-briefcase",
+  Vacation: "noto-beach-with-umbrella",
+  Family: "noto-family",
+}
+```
+
+For each event, the module checks `event.categories` (in order) against the keys of `iconMap`. The first match sets `event.icon`. If the event already has an icon set (e.g., by `transform`), `iconMap` does not override it.
+
+For `categories` to be populated, the iCal event must include a `CATEGORIES` property. See [Event-Object.md](Event-Object.md) for the full event shape.
+
+You can also use `categories` with `transform` to assign icons, which is the older approach:
+
+```js
+transform: (event) => {
+  const iconMap = {
+    Birthday: "fxemoji-birthdaycake",
+    Health: "noto-hospital",
+    Work: "noto-briefcase",
+    Vacation: "noto-beach-with-umbrella",
+    Family: "noto-family"
+  };
+  for (const [category, icon] of Object.entries(iconMap)) {
+    if (event.categories.includes(category)) {
+      event.icon = icon;
+      break;
+    }
+  }
+  return event;
+};
+```

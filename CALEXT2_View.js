@@ -51,10 +51,22 @@ class View {
   }
 
   transformEvents (events) {
-    if (typeof this.config.transform === "function") {
+    const hasIconMap = this.config.iconMap && Object.keys(this.config.iconMap).length > 0;
+    if (typeof this.config.transform === "function" || hasIconMap) {
       return events.map((e) => {
-        const event = {...e};
-        return this.config.transform(event);
+        let event = {...e};
+        if (typeof this.config.transform === "function") {
+          event = this.config.transform(event);
+        }
+        if (hasIconMap && !event.icon && Array.isArray(event.categories)) {
+          for (const category of event.categories) {
+            if (this.config.iconMap[category]) {
+              event.icon = this.config.iconMap[category];
+              break;
+            }
+          }
+        }
+        return event;
       });
     }
 

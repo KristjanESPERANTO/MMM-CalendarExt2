@@ -11,14 +11,23 @@ const config =
             {
               firstDrawingDelay: 0,
               name: "view1",
-              mode: "month",
-              slotCount: "7",
-              maxItems: "100",
+              mode: "week",
+              slotCount: 2,
+              maxItems: 100,
               hideOverflow: false,
-              slotMaxHeight: "95px",
-              monthFormat: "MMMM YYYY",
-              position: "top_right",
-              calendars: []
+              slotMaxHeight: "200px",
+              position: "fullscreen_below",
+              calendars: ["Demo categories"],
+              iconMap: {
+                Birthday: "fxemoji-birthdaycake",
+                Health: "noto-hospital",
+                Work: "noto-briefcase",
+                Vacation: "noto-beach-with-umbrella",
+                Leisure: "noto-musical-notes",
+                Family: "noto-family",
+                Deadline: "noto-alarm-clock",
+                Important: "noto-warning"
+              }
             }
           ],
           scenes: [
@@ -32,6 +41,11 @@ const config =
             },
             {
               url: "https://ics.calendarlabs.com/76/mm3137/US_Holidays.ics"
+            },
+            {
+              name: "Demo categories",
+              uid: "categories",
+              url: "http://localhost:8080/modules/MMM-CalendarExt2/demo-categories.ics"
             }
 
           ]

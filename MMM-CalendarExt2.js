@@ -125,6 +125,7 @@ Module.register("MMM-CalendarExt2", {
       filter: (event) => true,
       sort: (a, b) => a.startDate - b.startDate,
       transform: (event) => event,
+      iconMap: {},
       locale: "",
       fromNow: 0,
       slotCount: 3,
