@@ -84,7 +84,7 @@ By Example;
 transform: (event) => {
   if (event.title.search("Birthday") > -1) {
     // If the event might include "Birthday" in its title,
-    event.icon = "fxemoji-birthdaycake"; // Set icon of that event to "fxemoji-birthdaycake"
+    event.icon = "fxemoji:birthdaycake"; // Set icon of that event
   }
   return event; // Return that event.
 };
@@ -98,13 +98,19 @@ The `iconMap` view option assigns icons to events based on their categories. Unl
 
 ```js
 iconMap: {
-  Birthday: "fxemoji-birthdaycake",
-  Health: "noto-hospital",
-  Work: "noto-briefcase",
-  Vacation: "noto-beach-with-umbrella",
-  Family: "noto-family",
+  Birthday: "fxemoji:birthdaycake",
+  Health: "noto:hospital",
+  Work: "noto:briefcase",
+  Vacation: "noto:beach-with-umbrella",
+  Family: "noto:family",
 }
 ```
+
+Icon names use the format `prefix:name` (e.g. `noto:hospital`, `mdi:home`). The old
+`prefix-name` format (e.g. `noto-hospital`) is still accepted but will log a
+deprecation warning in the browser console.
+
+Icon names use the `prefix:name` format from [Iconify](https://icon-sets.iconify.design/) (e.g. `noto:hospital`, `mdi:home`). For backwards compatibility, the legacy `prefix-name` format (e.g. `noto-hospital`) is automatically converted.
 
 For each event, the module checks `event.categories` (in order) against the keys of `iconMap`. The first match sets `event.icon`. If the event already has an icon set (e.g., by `transform`), `iconMap` does not override it.
 
@@ -115,11 +121,11 @@ You can also use `categories` with `transform` to assign icons, which is the old
 ```js
 transform: (event) => {
   const iconMap = {
-    Birthday: "fxemoji-birthdaycake",
-    Health: "noto-hospital",
-    Work: "noto-briefcase",
-    Vacation: "noto-beach-with-umbrella",
-    Family: "noto-family"
+    Birthday: "fxemoji:birthdaycake",
+    Health: "noto:hospital",
+    Work: "noto:briefcase",
+    Vacation: "noto:beach-with-umbrella",
+    Family: "noto:family"
   };
   for (const [category, icon] of Object.entries(iconMap)) {
     if (event.categories.includes(category)) {

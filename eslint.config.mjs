@@ -61,6 +61,7 @@ export default defineConfig([
       ],
       "no-plusplus": ["error", {"allowForLoopAfterthoughts": true}],
       "no-ternary": "off",
+      "no-warning-comments": "warn",
       "one-var": "off",
       "prefer-destructuring": "off",
       "sort-keys": "off",

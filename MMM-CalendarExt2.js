@@ -189,7 +189,7 @@ Module.register("MMM-CalendarExt2", {
     scenes: [],
     views: [],
 
-    iconify: "//code.iconify.design/1/1.0.0-rc3/iconify.min.js",
+    iconify: null,
     firstDrawingDelay: 1000 // wait for other calendar parsing.
   },
 
@@ -265,7 +265,9 @@ Module.register("MMM-CalendarExt2", {
       "CALEXT2_Legend.js"
     );
 
-    if (this.config.iconify) {
+    if (this.config.iconify === null) {
+      scripts.push(this.file("node_modules/iconify-icon/dist/iconify-icon.min.js"));
+    } else if (this.config.iconify) {
       scripts.push(this.config.iconify);
     }
 
