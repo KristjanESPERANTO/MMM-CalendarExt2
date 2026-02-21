@@ -52,7 +52,7 @@ module.exports = NodeHelper.create({
    */
   scanCalendar (calendar) {
     Log.log(
-      `[CALEXT2] calendar:${calendar.name} >> Scanning start with interval:${calendar.scanInterval}`
+      `calendar:${calendar.name} >> Scanning start with interval:${calendar.scanInterval}`
     );
 
     const key = calendar.uid || calendar.url || calendar.name;
@@ -101,11 +101,11 @@ module.exports = NodeHelper.create({
 
   parser (calendar, iCalData = null, error = null) {
     if (error) {
-      Log.error(`[CALEXT2] calendar:${calendar.name} >> Error: ${error.message || error}`);
+      Log.error(`calendar:${calendar.name} >> Error: ${error.message || error}`);
       return;
     }
     if (!iCalData) {
-      Log.log(`[CALEXT2] calendar:${calendar.name} >> No data to fetch`);
+      Log.log(`calendar:${calendar.name} >> No data to fetch`);
       return;
     }
 
@@ -121,7 +121,7 @@ module.exports = NodeHelper.create({
         calendar.maxIterations
       );
     } catch (e) {
-      Log.log(`[CALEXT2] calendar:${calendar.name} >> ${e.message}`);
+      Log.log(`calendar:${calendar.name} >> ${e.message}`);
       return;
     }
 
@@ -204,7 +204,7 @@ module.exports = NodeHelper.create({
     });
     eventPool = eventPool.slice(0, calendar.maxItems);
     Log.log(
-      `[CALEXT2] calendar:${calendar.name} >> Scanned: ${wholeEvents.length}, Selected: ${eventPool.length}`
+      `calendar:${calendar.name} >> Scanned: ${wholeEvents.length}, Selected: ${eventPool.length}`
     );
     this.mergeEvents(eventPool, calendar.uid);
   },
