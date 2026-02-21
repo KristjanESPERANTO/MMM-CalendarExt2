@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.2.0](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/compare/v2.1.0...v2.2.0) (2026-02-21)
+
+### Features
+
+- add iconMap view option for category-based icons ([d2acd9d](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/commit/d2acd9d0b08846261f6e11812e1934c57f173230)), closes [#86](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/issues/86)
+- migrate from Iconify v1 CDN to iconify-icon web component ([f1681fe](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/commit/f1681fed24412358d10fba2d20405807badd4bb8))
+
+### Chores
+
+- add new types for chore, refactor, and test sections for changelog ([cf780b4](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/commit/cf780b415c6778ded16035f7cc8795e963d6e078))
+- update release script to commit all changes ([0456b2c](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/commit/0456b2c7b55e88a63cf97b7322d7425fec9d8e17))
+
+### Code Refactoring
+
+- remove [CALEXT2] prefix from log messages ([bda0d31](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/commit/bda0d3101c65d987b744c9a97e9691731f826d60))
+
 ## [2.1.0](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/compare/v2.0.2...v2.1.0) (2026-02-20)
 
 ### Features
