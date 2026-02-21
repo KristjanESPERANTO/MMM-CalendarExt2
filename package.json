@@ -29,7 +29,7 @@
     "prepare": "node -e \"try{require('simple-git-hooks').run()}catch(e){}\"",
     "prettier": "prettier . --check",
     "prettier:fix": "prettier . --write",
-    "release": "commit-and-tag-version",
+    "release": "commit-and-tag-version --commit-all",
     "stylelint": "stylelint **/*.css",
     "stylelint:fix": "stylelint **/*.css --fix",
     "test": "node --run lint && node --run prettier && node --run test:unit",
