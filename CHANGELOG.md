@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.3.0](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/compare/v2.2.0...v2.3.0) (2026-02-28)
+
+### Features
+
+- add weekStart config option (0=Sunday, 1=Monday) ([309388c](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/commit/309388cbcef145d08ac7e9fb5750e49fa3a52627))
+
+### Bug Fixes
+
+- defer drawEvents to next animation frame to prevent layout race ([922689d](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/commit/922689d2e5e409f9557792ab8166c600fc56fe84)), closes [#258](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/issues/258)
+- replace day.format("E") with day.day() for weekday CSS classes ([2fbd2c9](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/commit/2fbd2c9b08de49db3e27908048ce87fca060837b)), closes [#443](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/issues/443)
+- update runner to use ubuntu-latest for Super-Linter workflow ([74391db](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/commit/74391db3dc68dc42fffd502914042f54ad21277c))
+
+### Chores
+
+- update command to run unit tests in automated workflow ([1f51c9c](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/commit/1f51c9c30bb751cc3d2932667319e4d837ec5d39))
+- update dependencies ([cfa2f11](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/commit/cfa2f11b7346600961693cafea177e6855c76f2c))
+- update node engine requirement to >=20 ([3931811](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/commit/3931811c5bb18c1c6c74c65a567e3a8c31f14b6e))
+
+### Code Refactoring
+
+- extract slot date logic into pure testable helper ([87ef446](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/commit/87ef44619a39266bbe86a6568e3d258ae02b15b0))
+
 ## [2.2.0](https://github.com/MMM-CalendarExt2/MMM-CalendarExt2/compare/v2.1.0...v2.2.0) (2026-02-21)
 
 ### Features
