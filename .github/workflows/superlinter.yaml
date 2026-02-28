@@ -15,7 +15,7 @@ jobs:
     # Name the Job
     name: Lint Code Base
     # Set the type of machine to run on
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: read
