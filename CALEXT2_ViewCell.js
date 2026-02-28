@@ -1,5 +1,4 @@
-/* global dayjs */
-/* global View WeekSlot */
+/* global dayjs SlotDateHelpers View WeekSlot */
 // eslint-disable-next-line no-unused-vars
 class ViewCell extends View {
   constructor (config, events) {
@@ -82,28 +81,25 @@ class ViewCell extends View {
     slotDom.style.height = this.config.slotMaxHeight;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   makeCellDomClass (slot, daySeq, weekSeq) {
     const slotDom = slot.dom;
     if (daySeq >= 0) slotDom.classList.add(`cellSeq_${daySeq}`);
     if (weekSeq === 0 && daySeq === 0) {
       slotDom.classList.add("firstCell");
     }
-    const day = this.locale ? dayjs(slot.start).locale(this.locale) : dayjs(slot.start);
-    const now = this.locale ? dayjs().locale(this.locale) : dayjs();
-    if (now.format("YYYY") === day.format("YYYY"))
-      slotDom.classList.add("thisyear");
-    if (now.format("M") === day.format("M")) slotDom.classList.add("thismonth");
-    if (now.format("w") === day.format("w")) slotDom.classList.add("thisweek");
-    if (now.format("YYYYMMDD") === day.format("YYYYMMDD"))
-      slotDom.classList.add("today");
-    if (now.format("YYYYMMDD") > day.format("YYYYMMDD"))
-      slotDom.classList.add("passedday");
-    slotDom.classList.add(`weekday_${day.day() || 7}`);
-    slotDom.classList.add(`year_${day.format("YYYY")}`);
-    slotDom.classList.add(`month_${day.format("M")}`);
-    slotDom.classList.add(`day_${day.format("D")}`);
-    slotDom.classList.add(`week_${day.format("w")}`);
-    slotDom.classList.add(`dayofyear_${day.format("DDD")}`);
+    const info = SlotDateHelpers.getSlotDateInfo(slot.start.toDate(), null);
+    if (info.isSameYear) slotDom.classList.add("thisyear");
+    if (info.isSameMonth) slotDom.classList.add("thismonth");
+    if (info.isSameWeek) slotDom.classList.add("thisweek");
+    if (info.isToday) slotDom.classList.add("today");
+    if (info.isPassed) slotDom.classList.add("passedday");
+    slotDom.classList.add(`weekday_${info.weekday}`);
+    slotDom.classList.add(`year_${info.year}`);
+    slotDom.classList.add(`month_${info.month}`);
+    slotDom.classList.add(`day_${info.day}`);
+    slotDom.classList.add(`week_${info.week}`);
+    slotDom.classList.add(`dayofyear_${info.dayOfYear}`);
   }
 
   makeWeeksMark (start) {

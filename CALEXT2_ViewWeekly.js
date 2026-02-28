@@ -1,4 +1,4 @@
-/* global dayjs */
+/* global dayjs SlotDateHelpers */
 // eslint-disable-next-line no-unused-vars, no-undef
 class ViewWeekly extends ViewPeriod {
   constructor (config, events) {
@@ -11,17 +11,14 @@ class ViewWeekly extends ViewPeriod {
     super.makeSlotDomClass(slot);
     slotDom.classList.add("weekly");
 
-    const day = this.locale ? dayjs(slot.start).locale(this.locale) : dayjs(slot.start);
-    const dayEnd = this.locale ? dayjs(slot.end).locale(this.locale) : dayjs(slot.end);
-    const now = this.locale ? dayjs().locale(this.locale) : dayjs();
-    if (now.format("YYYY") === day.format("YYYY"))
-      slotDom.classList.add("thisyear");
-    if (now.format("M") === day.format("M")) slotDom.classList.add("thismonth");
-    if (now.format("w") === day.format("w")) slotDom.classList.add("thisweek");
-    if (now.isBetween(day, dayEnd, null, "[]")) slotDom.classList.add("today");
-    slotDom.classList.add(`year_${day.format("YYYY")}`);
-    slotDom.classList.add(`month_${day.format("M")}`);
-    slotDom.classList.add(`week_${day.format("w")}`);
+    const info = SlotDateHelpers.getSlotDateInfo(slot.start.toDate(), slot.end.toDate());
+    if (info.isSameYear) slotDom.classList.add("thisyear");
+    if (info.isSameMonth) slotDom.classList.add("thismonth");
+    if (info.isSameWeek) slotDom.classList.add("thisweek");
+    if (info.nowInRange) slotDom.classList.add("today");
+    slotDom.classList.add(`year_${info.year}`);
+    slotDom.classList.add(`month_${info.month}`);
+    slotDom.classList.add(`week_${info.week}`);
   }
 
   makeSlotHeader (slot) {
