@@ -2,7 +2,7 @@
   "rules": {
     "terminology": {
       "defaultTerms": true,
-      "skip": ["Bug Fixes"]
+      "terms": [["[Bb]ugfix(es)?", false]]
     }
   }
 }

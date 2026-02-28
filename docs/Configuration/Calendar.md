@@ -86,7 +86,7 @@ replaceTitle:[
 }
 ```
 
-- **`auth`** : If your calendar needs additional authenication, use it here. It currently supports `bearer`, `digest` and `basic`. Make sure to use the exact spelling or else it won't work. Nextcloud for example uses basic auth in most cases.
+- **`auth`** : If your calendar needs additional authentication, use it here. It currently supports `bearer`, `digest` and `basic`. Make sure to use the exact spelling or else it won't work. Nextcloud for example uses basic auth in most cases.
 
 ```javascript
 auth: {

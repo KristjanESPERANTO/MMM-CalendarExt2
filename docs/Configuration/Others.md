@@ -23,11 +23,11 @@ chosen to use cheap number comparisons before making costlier string
 comparisons.
 
 How does this actually work? The events are first sorted by the attributes you
-specified. Afterwards each event get's checked against the event that was
+specified. Afterwards each event gets checked against the event that was
 ordered before it. Then each event that is identical to it's predecessor gets
 dropped.
 
-Note: The implementors use case expects that events originate from different
+Note: The implementers use case expects that events originate from different
 calendars. So when a duplicate event gets removed, it's `calendarName` gets
 appended to the `calendarName` of the kept event. So if you specify calendars
 in a view you need to also specify the possible calendar combinations.

@@ -199,7 +199,7 @@ I also removed the background colors on all events (which means I also need to
 use the text color from outside in fullday events, as they would be
 black-on-black instead).
 
-To save a few more pixels the entire `eventTime` for fullday events get's
+To save a few more pixels the entire `eventTime` for fullday events gets
 hidden as well.
 
 Finally the events are color-coded per-person, so that Anja and I can

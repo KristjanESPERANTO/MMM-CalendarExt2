@@ -190,7 +190,7 @@ module.exports = NodeHelper.create({
       ev.calendarName = calendar.name;
       if (calendar.filter) {
         const f = JSON.parse(calendar.filter).filter;
-        // the calender.filter could be a string, so we have to upcycle it to a function (at least that's what klaernie thinks this does)
+        // the calendar.filter could be a string, so we have to upcycle it to a function (at least that's what klaernie thinks this does)
         const filter = Function(`return ${f.toString()}`); // eslint-disable-line no-new-func
         const r = filter(ev);
         if (r(ev)) {
