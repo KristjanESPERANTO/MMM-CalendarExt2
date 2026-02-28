@@ -45,7 +45,7 @@ jobs:
       - name: Check linting
         run: node --run lint
       - name: Run unit tests
-        run: npm run test:unit
+        run: node --run test:unit
       - name: Print job status
         run: echo "🍏 This job's status is ${JOB_STATUS}."
         env:
