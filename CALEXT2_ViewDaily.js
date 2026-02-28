@@ -22,7 +22,7 @@ class ViewDaily extends ViewPeriod {
       slotDom.classList.add("today");
     if (now.format("YYYYMMDD") > day.format("YYYYMMDD"))
       slotDom.classList.add("passed");
-    slotDom.classList.add(`weekday_${day.format("E")}`);
+    slotDom.classList.add(`weekday_${day.day() || 7}`);
     slotDom.classList.add(`year_${day.format("YYYY")}`);
     slotDom.classList.add(`month_${day.format("M")}`);
     slotDom.classList.add(`day_${day.format("D")}`);
