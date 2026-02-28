@@ -18,17 +18,19 @@ class ViewCell extends View {
   }
 
   getSlotPeriods () {
-    const {showWeekends} = this.config;
+    const {showWeekends, weekStart} = this.config;
+    // Offset of first workday from weekStart (Mon is always the first workday):
+    // weekStart=1 (Mon): Mon = offset 0; weekStart=0 (Sun): Mon = offset 1
+    const firstWorkDayOffset = weekStart === 0 ? 1 : 0;
     const getSlotPeriod = (tDay, seq) => {
       let mtd = dayjs(tDay);
       if (this.locale) mtd = mtd.locale(this.locale);
       mtd = mtd.add(seq, "week");
-      const start = showWeekends
-        ? dayjs(mtd).startOf("week")
-        : dayjs(mtd).startOf("week").day(1).startOf("day");
-      const end = showWeekends
-        ? dayjs(mtd).endOf("week")
-        : dayjs(mtd).startOf("week").day(5).endOf("day");
+      const diff = (mtd.day() - weekStart + 7) % 7;
+      const weekStartDay = mtd.subtract(diff, "day").startOf("day");
+      const start = showWeekends ? weekStartDay : weekStartDay.add(firstWorkDayOffset, "day");
+      const lastDayOffset = showWeekends ? 6 : firstWorkDayOffset + 4;
+      const end = weekStartDay.add(lastDayOffset, "day").endOf("day");
       return {
         start,
         end
@@ -45,15 +47,15 @@ class ViewCell extends View {
   }
 
   getSubSlotPeriods (start) {
-    const {showWeekends} = this.config;
+    const {showWeekends, weekStart} = this.config;
+    const firstWorkDayOffset = weekStart === 0 ? 1 : 0;
     const days = showWeekends ? 7 : 5;
     const periods = [];
-    const t = start;
-    let startDay = dayjs(t);
+    let startDay = dayjs(start);
     if (this.locale) startDay = startDay.locale(this.locale);
-    startDay = showWeekends
-      ? startDay.startOf("week")
-      : startDay.startOf("week").day(1).startOf("day");
+    const diff = (startDay.day() - weekStart + 7) % 7;
+    const weekStartDay = startDay.subtract(diff, "day").startOf("day");
+    startDay = showWeekends ? weekStartDay : weekStartDay.add(firstWorkDayOffset, "day");
     for (let i = 0; i < days; i++) {
       const p = {
         start: dayjs(startDay).startOf("day"),
@@ -81,14 +83,14 @@ class ViewCell extends View {
     slotDom.style.height = this.config.slotMaxHeight;
   }
 
-  // eslint-disable-next-line class-methods-use-this
+
   makeCellDomClass (slot, daySeq, weekSeq) {
     const slotDom = slot.dom;
     if (daySeq >= 0) slotDom.classList.add(`cellSeq_${daySeq}`);
     if (weekSeq === 0 && daySeq === 0) {
       slotDom.classList.add("firstCell");
     }
-    const info = SlotDateHelpers.getSlotDateInfo(slot.start.toDate(), null);
+    const info = SlotDateHelpers.getSlotDateInfo(slot.start.toDate(), null, null, this.config.weekStart);
     if (info.isSameYear) slotDom.classList.add("thisyear");
     if (info.isSameMonth) slotDom.classList.add("thismonth");
     if (info.isSameWeek) slotDom.classList.add("thisweek");

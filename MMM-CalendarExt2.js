@@ -170,7 +170,8 @@ Module.register("MMM-CalendarExt2", {
         future: "starts %STARTFROMNOW% (%DURATION%)"
       },
       useEventTimeRelative: false, // If true, relativeFormat will be used instead time/date/dateTimeFormat.
-      showAttendees: true // Show attendees/guests in event details. Set to false to hide.
+      showAttendees: true, // Show attendees/guests in event details. Set to false to hide.
+      weekStart: 1 // First day of week: 1 = Monday (ISO 8601, default), 0 = Sunday
     }
   },
 

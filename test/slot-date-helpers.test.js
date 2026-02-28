@@ -6,9 +6,14 @@ const {getSlotDateInfo} = require("../lib/slot-date-helpers");
 // ---------------------------------------------------------------------------
 // Fixed reference dates (all deterministic via nowOverride)
 //
-//  ISO week 8 of 2026  →  Feb 16 (Mon) – Feb 22 (Sun)
-//  ISO week 9 of 2026  →  Feb 23 (Mon) – Mar 01 (Sun)
-//  ISO week 10 of 2026 →  Mar 02 (Mon) – Mar 08 (Sun)
+//  Mon-first (weekStart=1 / ISO 8601)
+//    week 8 of 2026  →  Feb 16 (Mon) – Feb 22 (Sun)
+//    week 9 of 2026  →  Feb 23 (Mon) – Mar 01 (Sun)
+//    week 10 of 2026 →  Mar 02 (Mon) – Mar 08 (Sun)
+//
+//  Sun-first (weekStart=0)
+//    week 8 of 2026  →  Feb 22 (Sun) – Feb 28 (Sat)
+//    week 9 of 2026  →  Mar 01 (Sun) – Mar 07 (Sat)
 // ---------------------------------------------------------------------------
 const sat = new Date(2026, 1, 28); // Feb 28, 2026 (Saturday) — "today" baseline
 const fri = new Date(2026, 1, 27); // Feb 27, 2026 (Friday)
@@ -232,6 +237,70 @@ describe("getSlotDateInfo – nowInRange", () => {
 
   it("slotEnd is null → always false", () => {
     assert.ok(!getSlotDateInfo(sat, null, sat).nowInRange);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// weekStart=1 (ISO 8601, default) — all tests above implicitly use this
+// ---------------------------------------------------------------------------
+describe("getSlotDateInfo – isSameWeek weekStart=1 (default)", () => {
+  it("Sat Feb 28 and Sun Mar 1 are in the same Mon-first week", () => {
+    assert.ok(getSlotDateInfo(sun, null, sat, 1).isSameWeek);
+  });
+
+  it("Sat Feb 28 and Mon Mar 2 are in different Mon-first weeks", () => {
+    assert.ok(!getSlotDateInfo(mon, null, sat, 1).isSameWeek);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// weekStart=0 (Sunday-first)
+// ---------------------------------------------------------------------------
+describe("getSlotDateInfo – isSameWeek weekStart=0", () => {
+  it("Sat Feb 28 and Sun Mar 1 are in DIFFERENT Sun-first weeks", () => {
+    // With weekStart=0: Feb 28 is in Sun Feb 22 – Sat Feb 28; Mar 1 starts a new week
+    assert.ok(!getSlotDateInfo(sun, null, sat, 0).isSameWeek);
+  });
+
+  it("Sun Mar 1 and Sat Mar 7 are in the same Sun-first week", () => {
+    const mar7 = new Date(2026, 2, 7);
+    assert.ok(getSlotDateInfo(mar7, null, sun, 0).isSameWeek);
+  });
+
+  it("Sun Feb 22 and Sat Feb 28 are in the same Sun-first week", () => {
+    const feb22 = new Date(2026, 1, 22);
+    assert.ok(getSlotDateInfo(sat, null, feb22, 0).isSameWeek);
+  });
+
+  it("Sat Feb 21 and Sun Feb 22 are in DIFFERENT Sun-first weeks", () => {
+    const feb21 = new Date(2026, 1, 21);
+    const feb22 = new Date(2026, 1, 22);
+    assert.ok(!getSlotDateInfo(feb22, null, feb21, 0).isSameWeek);
+  });
+});
+
+describe("getSlotDateInfo – week number weekStart=0", () => {
+  it("Sat Feb 28 is Sun-first week 8", () => {
+    assert.equal(getSlotDateInfo(sat, null, sat, 0).week, 8);
+  });
+
+  it("Sun Mar 1 is Sun-first week 9 (starts a new week)", () => {
+    assert.equal(getSlotDateInfo(sun, null, sat, 0).week, 9);
+  });
+
+  it("Sun Jan 4, 2026 is Sun-first week 1", () => {
+    const jan4 = new Date(2026, 0, 4);
+    assert.equal(getSlotDateInfo(jan4, null, sat, 0).week, 1);
+  });
+});
+
+describe("getSlotDateInfo – week number weekStart=1 (explicit)", () => {
+  it("Sat Feb 28 is Mon-first week 9", () => {
+    assert.equal(getSlotDateInfo(sat, null, sat, 1).week, 9);
+  });
+
+  it("Sun Mar 1 is still Mon-first week 9", () => {
+    assert.equal(getSlotDateInfo(sun, null, sat, 1).week, 9);
   });
 });
 

@@ -10,7 +10,7 @@ class ViewMonthly extends ViewPeriod {
     const slotDom = slot.dom;
     super.makeSlotDomClass(slot);
     slotDom.classList.add("monthly");
-    const info = SlotDateHelpers.getSlotDateInfo(slot.start.toDate(), slot.end.toDate());
+    const info = SlotDateHelpers.getSlotDateInfo(slot.start.toDate(), slot.end.toDate(), null, this.config.weekStart);
     if (info.isSameYear) slotDom.classList.add("thisyear");
     if (info.isSameMonth) slotDom.classList.add("thismonth");
     if (info.nowInRange) slotDom.classList.add("today");

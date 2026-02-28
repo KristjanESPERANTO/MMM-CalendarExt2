@@ -11,7 +11,7 @@ class ViewDaily extends ViewPeriod {
     super.makeSlotDomClass(slot);
     slotDom.classList.add("daily");
 
-    const info = SlotDateHelpers.getSlotDateInfo(slot.start.toDate(), null);
+    const info = SlotDateHelpers.getSlotDateInfo(slot.start.toDate(), null, null, this.config.weekStart);
     if (info.isSameYear) slotDom.classList.add("thisyear");
     if (info.isSameMonth) slotDom.classList.add("thismonth");
     if (info.isSameWeek) slotDom.classList.add("thisweek");

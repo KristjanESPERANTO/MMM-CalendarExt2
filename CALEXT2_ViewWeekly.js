@@ -11,7 +11,7 @@ class ViewWeekly extends ViewPeriod {
     super.makeSlotDomClass(slot);
     slotDom.classList.add("weekly");
 
-    const info = SlotDateHelpers.getSlotDateInfo(slot.start.toDate(), slot.end.toDate());
+    const info = SlotDateHelpers.getSlotDateInfo(slot.start.toDate(), slot.end.toDate(), null, this.config.weekStart);
     if (info.isSameYear) slotDom.classList.add("thisyear");
     if (info.isSameMonth) slotDom.classList.add("thismonth");
     if (info.isSameWeek) slotDom.classList.add("thisweek");
