@@ -11,6 +11,7 @@ class View {
     this.contentDom = null;
     this.moduleDom = null;
     this.containerDom = null;
+    this.rafId = null;
     this.calendars = config.calendars;
     this.createDom();
     this.calendars = this.assignEvents([].concat(events));
@@ -80,6 +81,10 @@ class View {
   }
 
   destroy () {
+    if (this.rafId !== null) {
+      cancelAnimationFrame(this.rafId);
+      this.rafId = null;
+    }
     this.hide();
     setTimeout(() => {
       if (this.slots) {
@@ -319,9 +324,19 @@ class View {
   }
 
   drawEvents () {
-    for (let i = 0; i < this.slots.length; i++) {
-      const slot = this.slots[i];
-      slot.drawEvents();
-    }
+    // Defer drawing to the next animation frame to ensure the DOM has been
+    // fully laid out before measuring with getBoundingClientRect(). Without
+    // this, WeekSlot may read intermediate values during CSS transitions and
+    // freeze incorrect widths as inline styles (see issue #258).
+    // The rafId is stored so destroy() can cancel a pending callback,
+    // preventing stale draws on already-hidden views.
+    this.rafId = requestAnimationFrame(() => {
+      this.rafId = null;
+      if (!this.slots) return;
+      for (let i = 0; i < this.slots.length; i++) {
+        const slot = this.slots[i];
+        slot.drawEvents();
+      }
+    });
   }
 }
