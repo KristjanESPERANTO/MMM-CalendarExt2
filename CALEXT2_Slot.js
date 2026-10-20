@@ -1,6 +1,8 @@
-/* global dayjs */
-// eslint-disable-next-line no-unused-vars
-class Slot {
+import {CalendarEvent} from "./CALEXT2_Event.js";
+
+const dayjs = globalThis.dayjs;
+
+export class Slot {
   constructor (view, period, seq = 0) {
     this.start = period.start;
     this.end = period.end;
@@ -65,7 +67,7 @@ class Slot {
       contentRect = this.contentDom.getBoundingClientRect();
     }
     for (let i = 0; i < this.events.length; i++) {
-      const event = new Event(this.events[i], this);
+      const event = new CalendarEvent(this.events[i], this);
       hiddenCount += this.drawEvent(event, contentRect);
     }
     if (hiddenCount > 0) {

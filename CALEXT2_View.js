@@ -1,7 +1,9 @@
-/* global Log Slot ViewCurrent ViewUpcoming ViewMonth ViewDaily ViewWeekly ViewMonthly ViewWeek ViewLegend */
-/* global dayjs */
-// eslint-disable-next-line no-unused-vars
-class View {
+import {Slot} from "./CALEXT2_Slot.js";
+
+const Log = globalThis.Log;
+const dayjs = globalThis.dayjs;
+
+export class View {
   constructor (config, events) {
     this.config = config;
     this.locale = config.locale;
@@ -15,29 +17,6 @@ class View {
     this.calendars = config.calendars;
     this.createDom();
     this.calendars = this.assignEvents([].concat(events));
-  }
-
-  static makeByName (config, events) {
-    switch (config.mode) {
-      case "current":
-        return new ViewCurrent(config, events);
-      case "upcoming":
-        return new ViewUpcoming(config, events);
-      case "month":
-        return new ViewMonth(config, events);
-      case "daily":
-        return new ViewDaily(config, events);
-      case "weekly":
-        return new ViewWeekly(config, events);
-      case "monthly":
-        return new ViewMonthly(config, events);
-      case "week":
-        return new ViewWeek(config, events);
-      case "legend":
-        return new ViewLegend(config, events);
-      default:
-        return new ViewWeek(config, events);
-    }
   }
 
   assignEvents (events) {

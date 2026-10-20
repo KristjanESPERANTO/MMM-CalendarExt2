@@ -1,6 +1,10 @@
-/* global dayjs SlotDateHelpers View WeekSlot */
-// eslint-disable-next-line no-unused-vars
-class ViewCell extends View {
+import {View} from "./CALEXT2_View.js";
+import {WeekSlot} from "./CALEXT2_WeekSlot.js";
+
+const dayjs = globalThis.dayjs;
+const SlotDateHelpers = globalThis.SlotDateHelpers;
+
+export class ViewCell extends View {
   constructor (config, events) {
     super(config, events);
     this.slotUnit = "week";

@@ -1,5 +1,6 @@
-// eslint-disable-next-line no-unused-vars, no-undef
-class ViewPeriod extends View {
+import {View} from "./CALEXT2_View.js";
+
+export class ViewPeriod extends View {
   makeSlotDomClass (slot) {
     const slotDom = slot.dom;
     super.makeSlotDomClass(slot);

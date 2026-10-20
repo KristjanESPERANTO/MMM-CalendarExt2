@@ -1,6 +1,7 @@
-/* global dayjs IconHelpers */
-// eslint-disable-next-line no-unused-vars
-class Event {
+const dayjs = globalThis.dayjs;
+const IconHelpers = globalThis.IconHelpers;
+
+export class CalendarEvent {
   constructor (data, slot) {
     this.data = data;
     this.locale = slot.locale;
@@ -109,7 +110,7 @@ class Event {
     eventDom.dataset.title = event.title;
     eventDom.dataset.location = event.location;
     eventDom.dataset.busystatus = event.ms_busystatus;
-    Event.applyCategories(event, eventDom, null);
+    CalendarEvent.applyCategories(event, eventDom, null);
 
     const mainDom = document.createElement("div");
     mainDom.classList.add("eventMain");
@@ -137,7 +138,7 @@ class Event {
     location.classList.add("eventLocation");
     location.innerHTML = event.location;
     subDom.appendChild(location);
-    Event.applyCategories(event, null, subDom);
+    CalendarEvent.applyCategories(event, null, subDom);
 
     // Add attendees if present and enabled
     if (this.showAttendees && event.attendees && event.attendees.length > 0) {

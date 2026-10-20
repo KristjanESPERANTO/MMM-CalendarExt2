@@ -1,7 +1,10 @@
-/* global CellSlot Slot */
-/* global dayjs */
-// eslint-disable-next-line no-unused-vars
-class WeekSlot extends Slot {
+import {CalendarEvent} from "./CALEXT2_Event.js";
+import {CellSlot} from "./CALEXT2_CellSlot.js";
+import {Slot} from "./CALEXT2_Slot.js";
+
+const dayjs = globalThis.dayjs;
+
+export class WeekSlot extends Slot {
   constructor (view, period, seq = 0) {
     super(view, period, seq);
     this.useEventTimeRelative = false;
@@ -53,7 +56,7 @@ class WeekSlot extends Slot {
   }
 
   makeCellEvent (data) {
-    const event = new Event(data, this);
+    const event = new CalendarEvent(data, this);
     return event.dom;
   }
 

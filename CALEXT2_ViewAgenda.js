@@ -1,6 +1,8 @@
-/* global dayjs */
-// eslint-disable-next-line no-unused-vars, no-undef
-class ViewAgenda extends View {
+import {View} from "./CALEXT2_View.js";
+
+const dayjs = globalThis.dayjs;
+
+export class ViewAgenda extends View {
   constructor (config, events) {
     super(config, events);
     this.slotUnit = "day";

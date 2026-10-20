@@ -1,4 +1,4 @@
-/* global Module Scene config dayjs */
+/* global Module config dayjs */
 
 Module.register("MMM-CalendarExt2", {
   predefined: {
@@ -104,8 +104,7 @@ Module.register("MMM-CalendarExt2", {
       icon: "",
       className: "",
       auth: {},
-      // eslint-disable-next-line no-unused-vars
-      filter: (event) => true // you can make a filter to include/exclude specific events per calendar
+      filter: () => true // you can make a filter to include/exclude specific events per calendar
     },
     scene: {
       name: "",
@@ -120,8 +119,7 @@ Module.register("MMM-CalendarExt2", {
       positionOrder: -1,
       title: "", // ???
       calendars: [],
-      // eslint-disable-next-line no-unused-vars
-      filter: (event) => true,
+      filter: () => true,
       sort: (a, b) => a.startDate - b.startDate,
       transform: (event) => event,
       iconMap: {},
@@ -246,25 +244,7 @@ Module.register("MMM-CalendarExt2", {
       scripts.push(this.file(`node_modules/dayjs/locale/${locale}.js`));
     }
 
-    scripts.push(
-      "CALEXT2_Scene.js",
-      "CALEXT2_View.js",
-      "CALEXT2_Event.js",
-      "CALEXT2_Slot.js",
-      "CALEXT2_CellSlot.js",
-      "CALEXT2_WeekSlot.js",
-      "CALEXT2_ViewAgenda.js",
-      "CALEXT2_ViewCell.js",
-      "CALEXT2_ViewCurrent.js",
-      "CALEXT2_ViewPeriod.js",
-      "CALEXT2_ViewDaily.js",
-      "CALEXT2_ViewMonth.js",
-      "CALEXT2_ViewMonthly.js",
-      "CALEXT2_ViewUpcoming.js",
-      "CALEXT2_ViewWeek.js",
-      "CALEXT2_ViewWeekly.js",
-      "CALEXT2_Legend.js"
-    );
+    scripts.push(this.file("CALEXT2_Frontend.mjs"));
 
     if (this.config.iconify === null) {
       scripts.push(this.file("node_modules/iconify-icon/dist/iconify-icon.min.js"));
@@ -437,7 +417,7 @@ Module.register("MMM-CalendarExt2", {
     this.rotateTimer = null;
 
     if (this.currentScene) this.currentScene.clearViews();
-    this.currentScene = new Scene(uid, this.config);
+    this.currentScene = new globalThis.Scene(uid, this.config);
     setTimeout(() => {
       this.currentScene.draw(this.events);
     }, 500);

@@ -1,6 +1,8 @@
-/* global SlotDateHelpers ViewPeriod */
-// eslint-disable-next-line no-unused-vars
-class ViewDaily extends ViewPeriod {
+import {ViewPeriod} from "./CALEXT2_ViewPeriod.js";
+
+const SlotDateHelpers = globalThis.SlotDateHelpers;
+
+export class ViewDaily extends ViewPeriod {
   constructor (config, events) {
     super(config, events);
     this.slotUnit = "day";

@@ -1,6 +1,6 @@
-/* global View */
-// eslint-disable-next-line no-unused-vars
-class Scene {
+import {makeView} from "./CALEXT2_ViewFactory.mjs";
+
+export class Scene {
   constructor (uid, cfgs) {
     const scene = cfgs.scenes[uid];
     const sceneLength = cfgs.scenes.length;
@@ -32,7 +32,7 @@ class Scene {
       viewConfig.calendarLegends = viewConfig.calendars.map((calendarName) =>
         this.calendarNames.find((config) => config.name === calendarName));
 
-      const view = View.makeByName(viewConfig, events);
+      const view = makeView(viewConfig, events);
       if (view) {
         this.views.push(view);
         view.draw();

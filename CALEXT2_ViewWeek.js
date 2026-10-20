@@ -1,2 +1,3 @@
-// eslint-disable-next-line no-unused-vars, no-undef
-class ViewWeek extends ViewCell {}
+import {ViewCell} from "./CALEXT2_ViewCell.js";
+
+export class ViewWeek extends ViewCell {}

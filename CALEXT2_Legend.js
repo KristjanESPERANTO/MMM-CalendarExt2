@@ -1,6 +1,6 @@
-/* global View */
-// eslint-disable-next-line no-unused-vars
-class ViewLegend extends View {
+import {View} from "./CALEXT2_View.js";
+
+export class ViewLegend extends View {
   draw () {
     this.drawDom();
     this.drawLegend();

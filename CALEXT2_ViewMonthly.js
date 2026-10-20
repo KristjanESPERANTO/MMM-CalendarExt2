@@ -1,6 +1,8 @@
-/* global SlotDateHelpers */
-// eslint-disable-next-line no-unused-vars, no-undef
-class ViewMonthly extends ViewPeriod {
+import {ViewPeriod} from "./CALEXT2_ViewPeriod.js";
+
+const SlotDateHelpers = globalThis.SlotDateHelpers;
+
+export class ViewMonthly extends ViewPeriod {
   constructor (config, events) {
     super(config, events);
     this.slotUnit = "month";

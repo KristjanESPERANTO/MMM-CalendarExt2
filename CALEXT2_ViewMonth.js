@@ -1,7 +1,8 @@
-/* global dayjs */
-/* global ViewCell */
-// eslint-disable-next-line no-unused-vars
-class ViewMonth extends ViewCell {
+import {ViewCell} from "./CALEXT2_ViewCell.js";
+
+const dayjs = globalThis.dayjs;
+
+export class ViewMonth extends ViewCell {
   getSlotCount () {
     const startDay = this.getStartDay();
     const endDay = this.getEndWeek();

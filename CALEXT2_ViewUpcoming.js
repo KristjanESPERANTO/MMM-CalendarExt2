@@ -1,6 +1,8 @@
-/* global dayjs */
-// eslint-disable-next-line no-unused-vars, no-undef
-class ViewUpcoming extends ViewAgenda {
+import {ViewAgenda} from "./CALEXT2_ViewAgenda.js";
+
+const dayjs = globalThis.dayjs;
+
+export class ViewUpcoming extends ViewAgenda {
   makeSlotDomClass (slot) {
     const slotDom = slot.dom;
     super.makeSlotDomClass(slot);
