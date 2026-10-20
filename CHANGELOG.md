@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.3.7](https://github.com/MagicMirrorModules/MMM-CalendarExt2/compare/v2.3.6...v2.3.7) (2026-10-20)
+
+### Chores
+
+* **deps-dev:** bump @eslint/json from 1.2.0 to 2.0.0 ([cef6d72](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/cef6d72e44d1aa6eac36cf9492e23ffd0d8acb66))
+* **deps-dev:** bump @eslint/json from 2.0.0 to 2.0.1 ([db86793](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/db86793554f91b55fabb4be14a8c0559d6cb2d75))
+* **deps-dev:** bump commit-and-tag-version from 12.7.3 to 13.1.2 ([61d442a](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/61d442a311056c2a70604fdccd75561f7dcc67d3))
+* **deps-dev:** bump eslint from 10.3.0 to 10.8.0 ([f487319](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/f487319ccd155ff48b047cbf26a23ee47e4f0430))
+* **deps-dev:** bump eslint-plugin-import-x from 4.16.2 to 4.17.1 ([d066a4f](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/d066a4f8ba4d614eff34b4accdfd1920a1a6fa68))
+* **deps-dev:** bump globals from 17.6.0 to 17.9.0 ([6bdeb85](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/6bdeb85da12394899b3b578431a0abeef74366e2))
+* **deps-dev:** bump js-yaml from 4.3.0 to 4.3.1 ([91f528b](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/91f528b94cdb745540b8798269264b41243b2557))
+* **deps-dev:** bump linkify-it from 5.0.0 to 5.0.2 ([89bd25f](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/89bd25f5d49ed7d5e5823de387fe8701076ff6b0))
+* **deps-dev:** bump lint-staged from 17.0.4 to 17.2.0 ([4291b67](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/4291b67e6151adb4baaaf9ad96b51b12f401caf8))
+* **deps-dev:** bump markdownlint-cli2 from 0.23.1 to 0.23.2 ([4e5b8f6](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/4e5b8f6fe94acecfdbb5f4b037fec18f9129f742))
+* **deps-dev:** bump stylelint from 17.11.0 to 17.14.1 ([0c4a097](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/0c4a09754c7d202495a923c74cf0bcbbc46a19bf))
+* **deps:** bump actions/checkout from 6 to 7 ([89a1ade](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/89a1adebfa266162620d23df3fbbfe709d91849e))
+* **deps:** bump actions/setup-node from 6 to 7 ([84926b4](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/84926b43b1dcafbb88451b9076aeb6b2180f8630))
+* **deps:** bump dayjs from 1.11.20 to 1.11.21 ([8c1b373](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/8c1b3730d96dfdcdb7dfc747098f90b3557f5a23))
+* **deps:** bump fast-uri from 3.1.2 to 3.1.4 ([6a77292](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/6a772929bb208c59af94197d047b2a239f036887))
+* **deps:** bump fast-uri from 3.1.4 to 3.1.5 ([cfd442e](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/cfd442ed30cdb5231ffbeda000c8a0147f666eba))
+* **deps:** bump github/codeql-action from 3 to 4.37.3 ([99a1493](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/99a1493af5b238de617f34261a8d1c787cceb3c9))
+* **deps:** bump github/codeql-action from 4.37.3 to 4.38.2 ([60452f4](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/60452f49206ebd477ea1b1bb608bff625aa0b402))
+* **deps:** bump markdown-it and markdownlint-cli2 ([bcf3453](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/bcf3453d906db3079057425656ed8dabb789314f))
+* update dependencies ([afb24dd](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/afb24dd9469ac3b56b6f80e8bd91ec7c11d7cdd2))
+
+### Code Refactoring
+
+* migrate scripts to ESM ([a6b523b](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/a6b523b37dd57959852a96f00c631b0045cdb30f))
+
 ## [2.3.6](https://github.com/MagicMirrorModules/MMM-CalendarExt2/compare/v2.3.5...v2.3.6) (2026-05-10)
 
 
