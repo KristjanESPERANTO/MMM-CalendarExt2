@@ -77,23 +77,23 @@
     ]
   },
   "dependencies": {
-    "dayjs": "^1.11.21",
-    "iconify-icon": "^3.0.2",
-    "node-ical": "^0.26.1"
+    "dayjs": "^1.11.23",
+    "iconify-icon": "^3.0.4",
+    "node-ical": "^0.27.3"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@eslint/json": "^2.0.1",
+    "@eslint/json": "^2.1.1",
     "@stylistic/eslint-plugin": "^5.10.0",
-    "commit-and-tag-version": "^13.1.2",
-    "eslint": "^10.8.0",
+    "commit-and-tag-version": "^13.3.0",
+    "eslint": "^10.13.0",
     "eslint-plugin-import-x": "^4.17.1",
-    "globals": "^17.9.0",
-    "lint-staged": "^17.2.0",
-    "markdownlint-cli2": "^0.23.2",
-    "prettier": "^3.8.3",
-    "simple-git-hooks": "^2.13.1",
-    "stylelint": "^17.14.1",
+    "globals": "^17.13.0",
+    "lint-staged": "^17.6.0",
+    "markdownlint-cli2": "^0.23.3",
+    "prettier": "^3.9.10",
+    "simple-git-hooks": "^2.14.0",
+    "stylelint": "^17.16.0",
     "stylelint-config-standard": "^40.0.0",
     "stylelint-prettier": "^5.0.3"
   },
@@ -102,5 +102,9 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "allowScripts": {
+    "unrs-resolver@1.11.1": true,
+    "simple-git-hooks@2.14.0": true
   }
 }
