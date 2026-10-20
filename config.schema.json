@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "locale": { "type": "string" },
+    "rotateInterval": { "type": "integer", "minimum": 0 },
+    "updateInterval": { "type": "integer", "minimum": 0 },
+    "deduplicateEventsOn": { "type": "array", "items": { "type": "string" } },
+    "defaultSet": {
+      "type": "object",
+      "properties": {
+        "calendar": { "type": "object", "additionalProperties": true },
+        "scene": { "type": "object", "additionalProperties": true },
+        "view": { "type": "object", "additionalProperties": true }
+      },
+      "description": "Default options merged into calendars, scenes, and views"
+    },
+    "calendars": {
+      "type": "array",
+      "items": { "type": "object", "additionalProperties": true }
+    },
+    "scenes": {
+      "type": "array",
+      "items": { "type": "object", "additionalProperties": true }
+    },
+    "views": {
+      "type": "array",
+      "items": { "type": "object", "additionalProperties": true }
+    },
+    "iconify": {
+      "type": ["boolean", "string", "null"],
+      "description": "Use the built-in Iconify script, a custom script URL, or null for the default"
+    },
+    "firstDrawingDelay": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Delay before initial drawing, in milliseconds"
+    }
+  }
+}
