@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.4.0](https://github.com/MagicMirrorModules/MMM-CalendarExt2/compare/v2.3.7...v2.4.0) (2026-10-21)
+
+### Features
+
+* **config:** add module config schema ([7322252](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/7322252f59ba4eacc37a92d37fd51d7dcf8c9b01))
+
+### Bug Fixes
+
+* load frontend ESM on MM 2.36 ([8b3a3a7](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/8b3a3a712642cc84acde760905dd288a3a4283a6))
+
+### Chores
+
+* update devDependencies ([2691cee](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/2691ceeac55d843e19ea56c2c522ee3ff98b42b4))
+
 ## [2.3.7](https://github.com/MagicMirrorModules/MMM-CalendarExt2/compare/v2.3.6...v2.3.7) (2026-10-20)
 
 ### Chores
