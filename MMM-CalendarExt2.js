@@ -244,7 +244,7 @@ Module.register("MMM-CalendarExt2", {
       scripts.push(this.file(`node_modules/dayjs/locale/${locale}.js`));
     }
 
-    scripts.push(this.file("CALEXT2_Frontend.mjs"));
+    scripts.push(this.file("CALEXT2_Frontend.js"));
 
     if (this.config.iconify === null) {
       scripts.push(this.file("node_modules/iconify-icon/dist/iconify-icon.min.js"));
@@ -406,12 +406,14 @@ Module.register("MMM-CalendarExt2", {
     }
   },
 
-  work (sceneUid = null) {
+  async work (sceneUid = null) {
     const uid = sceneUid === null ? this.currentSceneUid : sceneUid;
     this.currentSceneUid = uid;
     if (!this.showing) {
       return false;
     }
+
+    await globalThis.CALEXT2SceneReady;
 
     clearTimeout(this.rotateTimer);
     this.rotateTimer = null;
