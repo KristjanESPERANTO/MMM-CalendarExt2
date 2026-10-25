@@ -316,6 +316,14 @@ Module.register("MMM-CalendarExt2", {
       ...this.predefined.notifications,
       ...this.config.notifications
     };
+    this.config.defaultSet.calendar = {
+      ...this.config.defaultSet.calendar,
+      scanInterval: this.getNumericIntervalOrDefault(
+        "defaultSet.calendar.scanInterval",
+        this.config.defaultSet.calendar?.scanInterval ?? this.predefined.calendar.scanInterval,
+        this.predefined.calendar.scanInterval
+      )
+    };
 
     this.config.firstDrawingDelay = this.getNumericIntervalOrDefault(
       "firstDrawingDelay",
@@ -366,7 +374,7 @@ Module.register("MMM-CalendarExt2", {
         arrs[i].scanInterval = this.getNumericIntervalOrDefault(
           `calendars[${i}].scanInterval`,
           arrs[i].scanInterval,
-          this.predefined.calendar.scanInterval
+          this.config.defaultSet.calendar.scanInterval
         );
       }
       if (!arrs[i].locale && type === "view")

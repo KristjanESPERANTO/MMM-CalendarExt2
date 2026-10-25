@@ -56,6 +56,11 @@ describe("config interval validation", () => {
   it("logs and defaults string calendar scanInterval", () => {
     errorMessages.length = 0;
     const instance = createModule({
+      defaultSet: {
+        calendar: {
+          scanInterval: 90_000
+        }
+      },
       calendars: [
         {
           name: "Work",
@@ -65,9 +70,31 @@ describe("config interval validation", () => {
     });
     instance.initConfig();
 
-    assert.equal(instance.config.calendars[0].scanInterval, moduleDefinition.predefined.calendar.scanInterval);
+    assert.equal(instance.config.calendars[0].scanInterval, 90_000);
     assert.equal(errorMessages.length, 1);
     assert.ok(errorMessages[0].includes("calendars[0].scanInterval"));
+  });
+
+  it("defaults an invalid calendar default to the predefined interval", () => {
+    errorMessages.length = 0;
+    const instance = createModule({
+      defaultSet: {
+        calendar: {
+          scanInterval: "1000*60"
+        }
+      },
+      calendars: [
+        {
+          name: "Work"
+        }
+      ]
+    });
+    instance.initConfig();
+
+    assert.equal(instance.config.defaultSet.calendar.scanInterval, moduleDefinition.predefined.calendar.scanInterval);
+    assert.equal(instance.config.calendars[0].scanInterval, moduleDefinition.predefined.calendar.scanInterval);
+    assert.equal(errorMessages.length, 1);
+    assert.ok(errorMessages[0].includes("defaultSet.calendar.scanInterval"));
   });
 
   it("accepts numeric intervals", () => {
