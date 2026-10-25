@@ -97,6 +97,51 @@ describe("config interval validation", () => {
     assert.ok(errorMessages[0].includes("defaultSet.calendar.scanInterval"));
   });
 
+  it("defaults update intervals below one second", () => {
+    errorMessages.length = 0;
+    const instance = createModule({updateInterval: 999});
+    instance.initConfig();
+
+    assert.equal(instance.config.updateInterval, moduleDefinition.defaults.updateInterval);
+    assert.equal(errorMessages.length, 1);
+    assert.match(errorMessages[0], /at least 1000/u);
+  });
+
+  it("allows zero for firstDrawingDelay and rotateInterval", () => {
+    errorMessages.length = 0;
+    const instance = createModule({
+      firstDrawingDelay: 0,
+      rotateInterval: 0
+    });
+    instance.initConfig();
+
+    assert.equal(instance.config.firstDrawingDelay, 0);
+    assert.equal(instance.config.rotateInterval, 0);
+    assert.equal(errorMessages.length, 0);
+  });
+
+  it("defaults calendar scan intervals below one minute", () => {
+    errorMessages.length = 0;
+    const instance = createModule({
+      defaultSet: {
+        calendar: {
+          scanInterval: 90_000
+        }
+      },
+      calendars: [
+        {
+          name: "Work",
+          scanInterval: 59_999
+        }
+      ]
+    });
+    instance.initConfig();
+
+    assert.equal(instance.config.calendars[0].scanInterval, 90_000);
+    assert.equal(errorMessages.length, 1);
+    assert.match(errorMessages[0], /at least 60000/u);
+  });
+
   it("accepts numeric intervals", () => {
     errorMessages.length = 0;
     const instance = createModule({

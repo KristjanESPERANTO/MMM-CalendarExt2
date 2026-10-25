@@ -8,6 +8,9 @@
 | firstDrawingDelay   | Number (ms) | `1000*10`                                               | `1000`             | Sometimes, calendar parsing could be somewhat late. You can set delay for first drawing to wait calendar parsing |
 | deduplicateEventsOn | Array       | `["startDate","endDate","duration","title","location"]` | `[]`               | define which attributes must be equal in order to remove duplicate events                                        |
 
+`rotateInterval` may be `0` to disable rotation; otherwise it must be at least
+1000 ms. `updateInterval` must be at least 1000 ms. `firstDrawingDelay` may be 0.
+
 ## Event Deduplication
 
 Please read [pull request #18](https://github.com/eouia/MMM-CalendarExt2/pull/18)

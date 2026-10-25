@@ -37,7 +37,7 @@ export default defineConfig([
       "default-case": "off",
       "id-length": ["warn", {"exceptions": ["a", "b", "c", "e", "f", "i", "j", "k", "l", "p", "r", "t", "v"]}],
       "init-declarations": "off",
-      "max-lines": ["warn", 550],
+      "max-lines": ["warn", 560],
       "max-lines-per-function": ["warn", 150],
       "max-params": ["warn", 5],
       "max-statements": ["warn", 70],

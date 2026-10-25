@@ -1,5 +1,8 @@
 /* global Module config dayjs Log */
 
+const MINIMUM_INTERVAL = 1000;
+const MINIMUM_SCAN_INTERVAL = 60_000;
+
 Module.register("MMM-CalendarExt2", {
   predefined: {
     notifications: {
@@ -321,7 +324,8 @@ Module.register("MMM-CalendarExt2", {
       scanInterval: this.getNumericIntervalOrDefault(
         "defaultSet.calendar.scanInterval",
         this.config.defaultSet.calendar?.scanInterval ?? this.predefined.calendar.scanInterval,
-        this.predefined.calendar.scanInterval
+        this.predefined.calendar.scanInterval,
+        MINIMUM_SCAN_INTERVAL
       )
     };
 
@@ -333,12 +337,15 @@ Module.register("MMM-CalendarExt2", {
     this.config.updateInterval = this.getNumericIntervalOrDefault(
       "updateInterval",
       this.config.updateInterval,
-      this.defaults.updateInterval
+      this.defaults.updateInterval,
+      MINIMUM_INTERVAL
     );
     this.config.rotateInterval = this.getNumericIntervalOrDefault(
       "rotateInterval",
       this.config.rotateInterval,
-      this.defaults.rotateInterval
+      this.defaults.rotateInterval,
+      MINIMUM_INTERVAL,
+      true
     );
 
     this.initBasicObjects(this.config.calendars, "calendar");
@@ -346,9 +353,20 @@ Module.register("MMM-CalendarExt2", {
     this.initBasicObjects(this.config.scenes, "scene");
   },
 
-  getNumericIntervalOrDefault (name, value, fallback) {
-    if (!Number.isFinite(value) || value < 0) {
-      Log.error(`[CALEXT2] Invalid ${name}; expected a non-negative number in milliseconds. Using default ${fallback}.`);
+  /**
+   * Logs invalid intervals and returns the configured fallback.
+   * @param {string} name - Config path to include in the error message.
+   * @param {unknown} value - Interval value to validate.
+   * @param {number} fallback - Valid interval to use when validation fails.
+   * @param {number} [minimum=0] - Minimum allowed interval in milliseconds.
+   * @param {boolean} [allowZero=false] - Whether zero bypasses the minimum.
+   * @returns {number} The valid interval or the fallback.
+   */
+  getNumericIntervalOrDefault (name, value, fallback, minimum = 0, allowZero = false) {
+    const isBelowMinimum = value < minimum && !(allowZero && value === 0);
+    if (!Number.isFinite(value) || isBelowMinimum) {
+      const requirement = allowZero ? `0 or at least ${minimum}` : `at least ${minimum}`;
+      Log.error(`[CALEXT2] Invalid ${name}; expected ${requirement} milliseconds. Using default ${fallback}.`);
       return fallback;
     }
     return value;
@@ -374,7 +392,8 @@ Module.register("MMM-CalendarExt2", {
         arrs[i].scanInterval = this.getNumericIntervalOrDefault(
           `calendars[${i}].scanInterval`,
           arrs[i].scanInterval,
-          this.config.defaultSet.calendar.scanInterval
+          this.config.defaultSet.calendar.scanInterval,
+          MINIMUM_SCAN_INTERVAL
         );
       }
       if (!arrs[i].locale && type === "view")

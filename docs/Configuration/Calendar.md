@@ -50,7 +50,7 @@ Below fields are predefined values. Unless overriding it, this will be used by d
 - **`url`** : **REQUIRED** URL of `.ics`
 - **`name`** : **OPTIONAL BUT RECOMMENDED** name of this calendar. This value will be used in `view` to pick up specific calendar.
 - **`maxItems`** : how much events should be parsed.
-- **`scanInterval`** : (milliseconds) how often calendar should be rescanned.
+- **`scanInterval`** : (milliseconds) how often calendar should be rescanned; minimum 60000.
 - **`beforeDays`**, **afterDays** : Events between these days will be got.
 - **`maxIterations`**: If event is recurrent type, how many recurrence will be parsed.
 - **`forceLocalTZ`** : Some iCal has incorrect time zone information. When the iCal has that kind of problem, this option could be a simple fix.

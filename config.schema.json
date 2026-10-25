@@ -3,13 +3,23 @@
   "type": "object",
   "properties": {
     "locale": { "type": "string" },
-    "rotateInterval": { "type": "integer", "minimum": 0 },
-    "updateInterval": { "type": "integer", "minimum": 0 },
+    "rotateInterval": {
+      "type": "integer",
+      "anyOf": [{ "const": 0 }, { "minimum": 1000 }],
+      "description": "0 disables rotation; otherwise at least 1000 milliseconds"
+    },
+    "updateInterval": { "type": "integer", "minimum": 1000 },
     "deduplicateEventsOn": { "type": "array", "items": { "type": "string" } },
     "defaultSet": {
       "type": "object",
       "properties": {
-        "calendar": { "type": "object", "additionalProperties": true },
+        "calendar": {
+          "type": "object",
+          "properties": {
+            "scanInterval": { "type": "integer", "minimum": 60000 }
+          },
+          "additionalProperties": true
+        },
         "scene": { "type": "object", "additionalProperties": true },
         "view": { "type": "object", "additionalProperties": true }
       },
@@ -17,7 +27,13 @@
     },
     "calendars": {
       "type": "array",
-      "items": { "type": "object", "additionalProperties": true }
+      "items": {
+        "type": "object",
+        "properties": {
+          "scanInterval": { "type": "integer", "minimum": 60000 }
+        },
+        "additionalProperties": true
+      }
     },
     "scenes": {
       "type": "array",
