@@ -6,8 +6,7 @@ on:
     branches:
       - main
   pull_request:
-permissions:
-  statuses: write
+permissions: {}
 jobs:
   # Set the job key. The key is displayed as the job name
   # when a job name is not provided
@@ -32,17 +31,14 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: install modules
-        run: |
-          npm ci
-
       # Runs the Super-Linter action
       - name: Run Super-Linter
-        uses: super-linter/super-linter/slim@v8
+        uses: super-linter/super-linter/slim@v9.0.0
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LINTER_RULES_PATH: /
+          ENABLE_GITHUB_PULL_REQUEST_SUMMARY_COMMENT: false
+          LINTER_RULES_PATH: .
           JSCPD_CONFIG_FILE: .jscpd.json
           YAML_CONFIG_FILE: .yamllint.yaml
 
@@ -52,9 +48,8 @@ jobs:
           VALIDATE_GITHUB_ACTIONS_ZIZMOR: false
           VALIDATE_JAVASCRIPT_ES: false
           VALIDATE_JAVASCRIPT_PRETTIER: false
-          VALIDATE_JAVASCRIPT_STANDARD: false
           VALIDATE_JSON: false
+          VALIDATE_MARKDOWN: false
 
-          # Exclude symlinks because JSCPD has a problem with them
-          # (You could add more using |. Like this: .*(docs/index.md|filex.js|.filey.yaml).*)
+          # Exclude the docs symlink from file-based checks; JSCPD exclusions are in .jscpd.json.
           FILTER_REGEX_EXCLUDE: .*(docs[/]index.md|node_modules[/]).*

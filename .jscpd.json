@@ -1,3 +1,8 @@
 {
-  "ignore": ["docs/Configuration/Views/week-month.md", "**/node_modules/**"]
+  "gitignore": false,
+  "ignore": [
+    "docs/Configuration/Views/week-month.md",
+    "docs/index.md",
+    "**/node_modules/**"
+  ]
 }
