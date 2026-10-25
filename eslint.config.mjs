@@ -4,6 +4,7 @@ import globals from "globals";
 import {flatConfigs as importX} from "eslint-plugin-import-x";
 import js from "@eslint/js";
 import json from "@eslint/json";
+import markdown from "@eslint/markdown";
 import stylistic from "@stylistic/eslint-plugin";
 
 export default defineConfig([
@@ -92,6 +93,15 @@ export default defineConfig([
       "no-magic-numbers": "off",
       "one-var": "off",
       "sort-keys": "off"
+    }
+  },
+  {
+    "files": ["**/*.md"],
+    "plugins": {markdown},
+    "extends": ["markdown/recommended"],
+    "language": "markdown/gfm",
+    "rules": {
+      "markdown/no-duplicate-headings": ["error", {"checkSiblingsOnly": true}]
     }
   },
   {"files": ["**/*.json"], "ignores": ["package-lock.json"], "plugins": {json}, "extends": ["json/recommended"], "language": "json/json"}

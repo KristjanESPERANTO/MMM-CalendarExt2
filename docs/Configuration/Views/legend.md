@@ -1,6 +1,4 @@
-<!-- markdownlint-disable-file MD041 -->
-
-## View:legend
+# View:legend
 
 The purpose of this view is to show a legend of all calendars specified in the
 configuration to display. The legend is typically used on a large calendar view
@@ -11,7 +9,7 @@ sense when you add colors in a custom CSS file or add a class name to the
 calendar. The legend is a quick reference to see what colors or icons match to
 the calendar.
 
-### Configuration Reference
+## Configuration Reference
 
 ```js
 {
@@ -23,7 +21,7 @@ the calendar.
 },
 ```
 
-## Example
+## Examples
 
 ### Legend
 

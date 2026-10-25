@@ -166,7 +166,7 @@ All notable changes to this project will be documented in this file. See [commit
 
 ### Code Refactoring
 
-* remove [CALEXT2] prefix from log messages ([bda0d31](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/bda0d3101c65d987b744c9a97e9691731f826d60))
+* remove `[CALEXT2]` prefix from log messages ([bda0d31](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/bda0d3101c65d987b744c9a97e9691731f826d60))
 
 ## [2.1.0](https://github.com/MagicMirrorModules/MMM-CalendarExt2/compare/v2.0.2...v2.1.0) (2026-02-20)
 

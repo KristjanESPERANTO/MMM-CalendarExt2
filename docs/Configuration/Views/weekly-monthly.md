@@ -1,16 +1,16 @@
-<!-- markdownlint-disable-file MD041 -->
+# Weekly and monthly views
 
 You can use all of common fields of [View](../View.md) in these views also.
 
-# View:weekly
+## View:weekly
 
-| field              | value type       | value example | default value | memo                                                                                                                                                |
-| ------------------ | ---------------- | ------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| type               | String           | "row"         | "column"      | You can arrange event slots by row or column. This field will be ignored in other views. In `bar` or `fullscreen` region, `"row"` could look nicer. |
-| slotSubTitleFormat | String           | ""            | "gggg"        | predefined extra information of slots of this weekly view.                                                                                          |
-| slotTitleFormat    | String Or Object | ""            | "[Week: ]wo"  | predefined slot title.                                                                                                                              |
+| field              | value type       | value example | default value  | memo                                                                                                                                                |
+| ------------------ | ---------------- | ------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| type               | String           | "row"         | "column"       | You can arrange event slots by row or column. This field will be ignored in other views. In `bar` or `fullscreen` region, `"row"` could look nicer. |
+| slotSubTitleFormat | String           | ""            | "gggg"         | predefined extra information of slots of this weekly view.                                                                                          |
+| slotTitleFormat    | String Or Object | ""            | `"[Week: ]wo"` | predefined slot title.                                                                                                                              |
 
-# View:monthly
+## View:monthly
 
 | field              | value type       | value example | default value | memo                                                                                                                                                |
 | ------------------ | ---------------- | ------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |

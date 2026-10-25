@@ -1,8 +1,8 @@
-<!-- markdownlint-disable-file MD041 -->
+# Current and upcoming views
 
 You can use all of common fields of [View](../View.md) in these views also.
 
-# View:current
+## View:current
 
 | field                | value type | value example | default value | memo                                                                                                                     |
 | -------------------- | ---------- | ------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------ |
@@ -10,7 +10,7 @@ You can use all of common fields of [View](../View.md) in these views also.
 | maxItems             | Integer    | 5             | 10            | How many items shall be shown.                                                                                           |
 | useEventTimeRelative | Boolean    | false         | true          | Personally, I like relative format in current & upcoming view. You can modify it.                                        |
 
-# View:upcoming
+## View:upcoming
 
 | field                | value type | value example | default value | memo                                                                                                                     |
 | -------------------- | ---------- | ------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------ |

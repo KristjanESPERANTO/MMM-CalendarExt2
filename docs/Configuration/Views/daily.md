@@ -1,5 +1,3 @@
-<!-- markdownlint-disable-file MD041 -->
-
 You can use all of common fields of [View](../View.md) in this view also.
 
 # View:daily

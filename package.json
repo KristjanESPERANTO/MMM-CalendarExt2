@@ -22,24 +22,19 @@
     "demo": "cd ../../ && MM_CONFIG_FILE=modules/MMM-CalendarExt2/config.demo.js node --run start:dev",
     "eslint": "eslint",
     "eslint:fix": "eslint --fix",
-    "lint": "node --run eslint && node --run markdownlint",
-    "lint:fix": "node --run eslint:fix && node --run markdownlint:fix",
-    "markdownlint": "markdownlint-cli2 **/*.md",
-    "markdownlint:fix": "markdownlint-cli2 **/*.md --fix",
+    "lint": "node --run eslint",
+    "lint:fix": "node --run eslint:fix",
     "prepare": "simple-git-hooks || true",
     "prettier": "prettier . --check",
     "prettier:fix": "prettier . --write",
-    "release": "SKIP_SIMPLE_GIT_HOOKS=1 commit-and-tag-version --commit-all",
+    "release": "commit-and-tag-version --commit-all",
     "test": "node --run lint && node --run prettier && node --run test:unit",
     "test:unit": "node --test test/**/*.test.js"
   },
   "lint-staged": {
-    "!(*.md)": [
+    "**/*": [
       "eslint --fix",
       "prettier --write --ignore-unknown"
-    ],
-    "*.md": [
-      "prettier --write"
     ]
   },
   "standard-version": {
@@ -85,7 +80,7 @@
     "eslint-plugin-import-x": "^4.17.1",
     "globals": "^17.13.0",
     "lint-staged": "^17.6.0",
-    "markdownlint-cli2": "^0.24.0",
+    "@eslint/markdown": "^8.0.3",
     "prettier": "^3.9.10",
     "simple-git-hooks": "^2.14.0"
   },
