@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.4.1](https://github.com/MagicMirrorModules/MMM-CalendarExt2/compare/v2.4.0...v2.4.1) (2026-10-25)
+
+### Bug Fixes
+
+* enforce minimum timer intervals ([abd1b25](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/abd1b252d37af44745de9cb5f336d69346230dda))
+* honor configured calendar scan default ([6a2e560](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/6a2e56056eb64f321a33a9eca349270c19141e22))
+* log and default invalid intervals ([08e2898](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/08e2898e0d85c4ee35687c401ed5bb34f310ef4e))
+
+### Chores
+
+* add cooldown configuration for Dependabot updates ([7a80cf9](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/7a80cf9b3f6f2023ab146c10e5a0d67282b269c7))
+* **lint:** replace markdownlint with ESLint ([93037f6](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/93037f6f285e97d973baee699d8ebccee3513e10))
+* **lint:** replace Stylelint with ESLint CSS ([62042d9](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/62042d90dee8365536fd6788af16a990c877b151))
+
+### Code Refactoring
+
+* remove unused slot width override ([f7ec137](https://github.com/MagicMirrorModules/MMM-CalendarExt2/commit/f7ec13721dd417db48c5c997971db9863855e38f))
+
 ## [2.4.0](https://github.com/MagicMirrorModules/MMM-CalendarExt2/compare/v2.3.7...v2.4.0) (2026-10-21)
 
 ### Features
