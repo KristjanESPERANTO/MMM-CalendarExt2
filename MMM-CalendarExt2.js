@@ -1,4 +1,4 @@
-/* global Module config dayjs */
+/* global Module config dayjs Log */
 
 Module.register("MMM-CalendarExt2", {
   predefined: {
@@ -317,24 +317,33 @@ Module.register("MMM-CalendarExt2", {
       ...this.config.notifications
     };
 
-    if (typeof this.config.firstDrawingDelay === "string") {
-      // eslint-disable-next-line no-eval
-      this.config.firstDrawingDelay = eval(this.config.firstDrawingDelay);
-    }
-
-    if (typeof this.config.updateInterval === "string") {
-      // eslint-disable-next-line no-eval
-      this.config.updateInterval = eval(this.config.updateInterval);
-    }
-
-    if (typeof this.config.rotateInterval === "string") {
-      // eslint-disable-next-line no-eval
-      this.config.rotateInterval = eval(this.config.rotateInterval);
-    }
+    this.config.firstDrawingDelay = this.getNumericIntervalOrDefault(
+      "firstDrawingDelay",
+      this.config.firstDrawingDelay,
+      this.defaults.firstDrawingDelay
+    );
+    this.config.updateInterval = this.getNumericIntervalOrDefault(
+      "updateInterval",
+      this.config.updateInterval,
+      this.defaults.updateInterval
+    );
+    this.config.rotateInterval = this.getNumericIntervalOrDefault(
+      "rotateInterval",
+      this.config.rotateInterval,
+      this.defaults.rotateInterval
+    );
 
     this.initBasicObjects(this.config.calendars, "calendar");
     this.initBasicObjects(this.config.views, "view", this.predefined.views);
     this.initBasicObjects(this.config.scenes, "scene");
+  },
+
+  getNumericIntervalOrDefault (name, value, fallback) {
+    if (!Number.isFinite(value) || value < 0) {
+      Log.error(`[CALEXT2] Invalid ${name}; expected a non-negative number in milliseconds. Using default ${fallback}.`);
+      return fallback;
+    }
+    return value;
   },
 
   initBasicObjects (arrs, type, predefinedMode = null) {
@@ -353,14 +362,17 @@ Module.register("MMM-CalendarExt2", {
           ...arrs[i]
         };
       }
+      if (type === "calendar") {
+        arrs[i].scanInterval = this.getNumericIntervalOrDefault(
+          `calendars[${i}].scanInterval`,
+          arrs[i].scanInterval,
+          this.predefined.calendar.scanInterval
+        );
+      }
       if (!arrs[i].locale && type === "view")
         arrs[i].locale = this.config.locale;
       if (arrs[i].filter && type === "calendar") {
         arrs[i].filter = JSON.stringify({filter: arrs[i].filter.toString()});
-      }
-      if (typeof arrs[i].scanInterval === "string") {
-        // eslint-disable-next-line no-eval
-        arrs[i].scanInterval = eval(arrs[i].scanInterval);
       }
     }
   },
