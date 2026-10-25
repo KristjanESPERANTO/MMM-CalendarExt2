@@ -1,3 +1,4 @@
+import css from "@eslint/css";
 import {defineConfig} from "eslint/config";
 import globals from "globals";
 import {flatConfigs as importX} from "eslint-plugin-import-x";
@@ -6,6 +7,12 @@ import json from "@eslint/json";
 import stylistic from "@stylistic/eslint-plugin";
 
 export default defineConfig([
+  {
+    "files": ["**/*.css"],
+    "plugins": {css},
+    "extends": ["css/recommended"],
+    "language": "css/css"
+  },
   {
     "files": ["**/*.js"],
     "languageOptions": {

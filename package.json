@@ -22,27 +22,21 @@
     "demo": "cd ../../ && MM_CONFIG_FILE=modules/MMM-CalendarExt2/config.demo.js node --run start:dev",
     "eslint": "eslint",
     "eslint:fix": "eslint --fix",
-    "lint": "node --run eslint && node --run stylelint && node --run markdownlint",
-    "lint:fix": "node --run eslint:fix && node --run stylelint:fix && node --run markdownlint:fix",
+    "lint": "node --run eslint && node --run markdownlint",
+    "lint:fix": "node --run eslint:fix && node --run markdownlint:fix",
     "markdownlint": "markdownlint-cli2 **/*.md",
     "markdownlint:fix": "markdownlint-cli2 **/*.md --fix",
     "prepare": "simple-git-hooks || true",
     "prettier": "prettier . --check",
     "prettier:fix": "prettier . --write",
     "release": "SKIP_SIMPLE_GIT_HOOKS=1 commit-and-tag-version --commit-all",
-    "stylelint": "stylelint **/*.css",
-    "stylelint:fix": "stylelint **/*.css --fix",
     "test": "node --run lint && node --run prettier && node --run test:unit",
     "test:unit": "node --test test/**/*.test.js"
   },
   "lint-staged": {
-    "!(*.css|*.md)": [
+    "!(*.md)": [
       "eslint --fix",
       "prettier --write --ignore-unknown"
-    ],
-    "*.css": [
-      "stylelint --fix",
-      "prettier --write"
     ],
     "*.md": [
       "prettier --write"
@@ -82,6 +76,7 @@
     "node-ical": "^0.27.3"
   },
   "devDependencies": {
+    "@eslint/css": "^2.0.1",
     "@eslint/js": "^10.0.1",
     "@eslint/json": "^2.1.1",
     "@stylistic/eslint-plugin": "^5.10.0",
@@ -92,10 +87,7 @@
     "lint-staged": "^17.6.0",
     "markdownlint-cli2": "^0.24.0",
     "prettier": "^3.9.10",
-    "simple-git-hooks": "^2.14.0",
-    "stylelint": "^17.16.0",
-    "stylelint-config-standard": "^40.0.0",
-    "stylelint-prettier": "^5.0.3"
+    "simple-git-hooks": "^2.14.0"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"

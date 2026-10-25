@@ -84,12 +84,6 @@
   background-image: linear-gradient(rgb(0 0 0 / 100%), rgb(0 0 0 / 0%));
 }
 
-.CX2 .slot.eventCount_0 {
-  /* slot which has no event */
-
-  /* display:none; */
-}
-
 /* row and column */
 .CX2 .view.row {
   /* type: row view */
