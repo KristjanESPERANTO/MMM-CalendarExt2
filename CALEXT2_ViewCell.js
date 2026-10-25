@@ -116,11 +116,6 @@ export class ViewCell extends View {
     return weeks;
   }
 
-  // eslint-disable-next-line class-methods-use-this, no-unused-vars
-  adjustSlotWidth (slotDom, count) {
-    // if (this.config.type == "row") slotDom.style.width = ((100 / count) - 0.25) + "%"
-  }
-
   makeSlotHeader (slot) {
     super.makeSlotHeader(slot);
     const header = slot.headerDom;
